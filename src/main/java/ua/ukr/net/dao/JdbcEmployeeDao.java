@@ -37,7 +37,6 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
         }
     }
 
-
     @Override
     public void create(Employee employee) {
         try {

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/deleteDepart")
+
 public class DeleteDepart extends HttpServlet {
     private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
 

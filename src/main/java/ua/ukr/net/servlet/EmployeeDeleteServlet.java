@@ -10,6 +10,7 @@ import java.io.IOException;
 
 @WebServlet("/deleteEmployee")
 public class EmployeeDeleteServlet extends HttpServlet {
+
     private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
 
     @Override

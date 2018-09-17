@@ -19,5 +19,4 @@ public interface EmployeeDao {
     Employee findByEmail(String email);
 
    void updateDepartForEmployee(Long emplId, Long departId);
-
 }

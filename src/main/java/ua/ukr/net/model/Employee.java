@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.sql.Date;
 
 public class Employee {
+
     private long id;
     private String name;
     private String email;

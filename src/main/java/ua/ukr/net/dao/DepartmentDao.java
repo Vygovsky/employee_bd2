@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface DepartmentDao {
-    void create(Department department);
+    void  create(Department department);
 
     void update(Department department);
 

@@ -19,6 +19,7 @@ public abstract class AbstractJdbcDao {
         return connection;
    }
 
+
     private HikariConfig getHikariConfig() {
         HikariConfig config = new HikariConfig();
         config.setDataSourceClassName(null);

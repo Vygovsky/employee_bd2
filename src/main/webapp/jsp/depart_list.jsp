@@ -8,6 +8,7 @@
     <h1>Департаменты</h1>
 </div>
 
+
 <form>
     <table align="center" id="customers" width="600">
         <thead>

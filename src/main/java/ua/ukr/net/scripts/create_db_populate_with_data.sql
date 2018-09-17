@@ -4,6 +4,7 @@ drop table if exists EMPLOYEE;
 
 drop table if exists EMPLOYEE_DEPARTMENT;
 
+
 create table "EMPLOYEE"
 (
   "ID"         BIGINT       NOT NULL AUTO_INCREMENT,

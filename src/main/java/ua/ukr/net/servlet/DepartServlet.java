@@ -13,6 +13,7 @@ import java.util.Map;
 
 @WebServlet("/employee/departments")
 public class DepartServlet extends HttpServlet {
+
     private JdbcDepartmentDao jdbcDepartmentDao = new JdbcDepartmentDao();
 
     @Override

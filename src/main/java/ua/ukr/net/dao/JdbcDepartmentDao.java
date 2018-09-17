@@ -58,7 +58,6 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
         }
     }
 
-
     @Override
     public List<Department> findAll() {
         List<Department> departmentList = new ArrayList<>();
