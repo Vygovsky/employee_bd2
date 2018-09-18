@@ -46,7 +46,7 @@ public class EmployeeEditServlet extends HttpServlet {
         Long departId = Long.parseLong(req.getParameter("departments"));
 
         employeeDao.update(employee);
-        employeeDao.updateDepartForEmployee(employee.getId(), departId);
+        //employeeDao.updateDepartForEmployee(employee.getId(), departId);
 
         req.setAttribute("employee", employee);
         resp.sendRedirect("/employee/listEmployee");

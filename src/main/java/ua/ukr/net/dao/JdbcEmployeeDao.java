@@ -11,15 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
-    private final String FIND_ALL_EMPL = "SELECT EMPLOYEE.ID as ID, FIRST_NAME, EMAIL, BIRTHDAY, NAME FROM EMPLOYEE\n" +
-            "  LEFT JOIN EMPLOYEE_DEPARTMENT ON EMPLOYEE.ID = EMPLOYEE_DEPARTMENT.EMPLOYEE_ID\n" +
-            "  LEFT JOIN DEPARTMENT ON EMPLOYEE_DEPARTMENT.DEPARTMENT_ID = DEPARTMENT.ID;";
+    private final String FIND_ALL_EMPL = "SELECT * FROM EMPLOYEE";
     private final String FIND_BY_ID_EMPL = "SELECT * FROM employee WHERE id=?";
     private final String FIND_BY_EMAIL_EMPL = "SELECT * FROM employee WHERE email=?";
-    private final String UPDATE_EMPLOYEE = "UPDATE employee SET first_name=?, email=?, birthday=? WHERE id=?";
+    private final String UPDATE_EMPLOYEE = "UPDATE employee SET first_name=?, email=?, birthday=?, depart_id=? WHERE id=?";
     private final String DELETE = "DELETE FROM employee WHERE id=?";
-    private final String INSERT_EMPL = "INSERT INTO employee (first_name, email, birthday) VALUES(?,?,?)";
-    private final String UPDATE_BY_DEPART_FOR_IMPL = "UPDATE employee_department SET department_id=? WHERE employee_id=?";
+    private final String INSERT_EMPL = "INSERT INTO employee (first_name, email, birthday, depart_id) VALUES(?,?,?,?)";
+   // private final String UPDATE_BY_DEPART_FOR_IMPL = "UPDATE employee_department SET department_id=? WHERE employee_id=?";
 
 
     @Override
@@ -29,7 +27,8 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getEmail());
             preparedStatement.setDate(3, employee.getBirthday());
-            preparedStatement.setLong(4, employee.getId());
+            preparedStatement.setLong(4, employee.getDepartID());
+            preparedStatement.setLong(5, employee.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -44,6 +43,7 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getEmail());
             preparedStatement.setDate(3, employee.getBirthday());
+            preparedStatement.setLong(4, employee.getDepartID());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -70,13 +70,11 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
 
             while (resultSet.next()) {
                 Employee employee = new Employee();
-                Department department = new Department();
                 employee.setId(resultSet.getLong("ID"));
                 employee.setName(resultSet.getString("FIRST_NAME"));
                 employee.setEmail(resultSet.getString("EMAIL"));
                 employee.setBirthday(resultSet.getDate("BIRTHDAY"));
-                department.setName(resultSet.getString("NAME"));
-                employee.setDepartment(department);
+                employee.setDepartID(resultSet.getLong("DEPART_ID"));
                 listEmployee.add(employee);
 
             }
@@ -99,6 +97,7 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
                 employee.setName(resultSet.getString("FIRST_NAME"));
                 employee.setEmail(resultSet.getString("EMAIL"));
                 employee.setBirthday(resultSet.getDate("BIRTHDAY"));
+                employee.setDepartID(resultSet.getLong("DEPART_ID"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,6 +117,7 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
                 employeeMail.setName(resultSet.getString("FIRST_NAME"));
                 employeeMail.setEmail(resultSet.getString("EMAIL"));
                 employeeMail.setBirthday(resultSet.getDate("BIRTHDAY"));
+                employeeMail.setDepartID(resultSet.getLong("DEPART_ID"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,7 +126,7 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
     }
 
 
-    @Override
+    /*@Override
     public void updateDepartForEmployee(Long emplId, Long departId) {
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(UPDATE_BY_DEPART_FOR_IMPL);
@@ -136,6 +136,6 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
 
