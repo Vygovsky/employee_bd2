@@ -10,8 +10,7 @@ public class Employee {
     private String name;
     private String email;
     private Date birthday;
-    private Department department;
-
+    private Long departID;
 
     public Employee() {
     }
@@ -22,19 +21,18 @@ public class Employee {
         this.birthday = birthday;
     }
 
+    public Employee(String name, String email, Date birthday, Long departID) {
+        this.name = name;
+        this.email = email;
+        this.birthday = birthday;
+        this.departID = departID;
+    }
+
     public Employee(String name, String email, Date birthday, Department department) {
         this.name = name;
         this.email = email;
         this.birthday = birthday;
-        this.department = department;
-    }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
 
     public long getId() {
@@ -69,6 +67,14 @@ public class Employee {
         this.birthday = birthday;
     }
 
+    public Long getDepartID() {
+        return departID;
+    }
+
+    public void setDepartID(Long departID) {
+        this.departID = departID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,7 +86,7 @@ public class Employee {
         if (name != null ? !name.equals(employee.name) : employee.name != null) return false;
         if (email != null ? !email.equals(employee.email) : employee.email != null) return false;
         if (birthday != null ? !birthday.equals(employee.birthday) : employee.birthday != null) return false;
-        return department != null ? department.equals(employee.department) : employee.department == null;
+        return departID != null ? departID.equals(employee.departID) : employee.departID == null;
     }
 
     @Override
@@ -89,7 +95,7 @@ public class Employee {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (department != null ? department.hashCode() : 0);
+        result = 31 * result + (departID != null ? departID.hashCode() : 0);
         return result;
     }
 
