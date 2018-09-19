@@ -18,12 +18,13 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
     private final String UPDATE_DEPART = "UPDATE department SET name=? WHERE id=?";
     private final String DELETE_DEPART = "DELETE FROM department WHERE id=?";
     private final String INSERT_DEPART = "INSERT INTO department (name) VALUES(?)";
-   /* private final String COUNT_EMPL_IN_DEPART = "SELECT DEPARTMENT_ID  as ID,NAME,\n COUNT(*) as EMPL_COUNT FROM (\n" +
-            "SELECT NAME, DEPARTMENT_ID FROM EMPLOYEE\n" +
-            "INNER JOIN EMPLOYEE_DEPARTMENT ON EMPLOYEE.ID = EMPLOYEE_DEPARTMENT.EMPLOYEE_ID\n" +
-            "INNER JOIN DEPARTMENT ON EMPLOYEE_DEPARTMENT.DEPARTMENT_ID = DEPARTMENT.ID\n" +
-            ")GROUP BY NAME;";
-*/
+
+private final String COUNT_EMPL_IN_DEPART = "SELECT DEPARTMENT_ID  as ID,NAME,\n COUNT(*) as EMPL_COUNT FROM (\n" +
+             "SELECT NAME, DEPARTMENT_ID FROM EMPLOYEE\n" +
+             "INNER JOIN EMPLOYEE_DEPARTMENT ON EMPLOYEE.ID = EMPLOYEE_DEPARTMENT.EMPLOYEE_ID\n" +
+             "INNER JOIN DEPARTMENT ON EMPLOYEE_DEPARTMENT.DEPARTMENT_ID = DEPARTMENT.ID\n" +
+             ")GROUP BY NAME;";
+
     @Override
     public void create(Department department) {
         try {
@@ -67,10 +68,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
             while (resultSet.next()) {
                 Department department = new Department(
                         resultSet.getLong("ID"),
-                        resultSet.getString("NAME"), null);
-                //old code
-                /*department.setId(resultSet.getLong("ID"));
-                department.setName(resultSet.getString("NAME"));*/
+                        resultSet.getString("NAME"));
                 departmentList.add(department);
             }
         } catch (SQLException e) {
@@ -81,7 +79,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
 
     @Override
     public Department findByName(String nameDepartment) {
-        Department department = new Department(0, null, null);
+        Department department = new Department(0L, null);
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(FIND_BY_NAME_DEPART);
             preparedStatement.setString(1, nameDepartment);
@@ -98,14 +96,13 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
 
     @Override
     public Department findID(Long id) {
-        Department department = new Department(0, null, null);
+        Department department = new Department(0, null);
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(FIND_BY_ID_DEPART);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 department.setId(resultSet.getLong("ID"));
-                /*department.setName(resultSet.getString("NAME"));*/
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -114,7 +111,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
         return department;
     }
 
-  /*  @Override
+    @Override
     public Map<Department, Long> getCountOfEmployeesByDepartments() {
         Map<Department, Long> map = new HashMap<>();
         Department department;
@@ -130,7 +127,6 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
         }
         return map;
     }
-*/
 
 }
 

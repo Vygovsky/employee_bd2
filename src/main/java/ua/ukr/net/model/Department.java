@@ -2,25 +2,16 @@ package ua.ukr.net.model;
 
 import com.google.gson.Gson;
 
-import java.util.List;
-
 public class Department {
 
     private long id;
     private String name;
 
-
     public Department(String name) {
-        this(0, name, null);
+        this(0, name);
     }
 
     public Department() {
-    }
-
-    public Department(long id, String name, List<Employee> employees) {
-        this.id = id;
-        this.name = name;
-
     }
 
     public Department(long id, String name) {
