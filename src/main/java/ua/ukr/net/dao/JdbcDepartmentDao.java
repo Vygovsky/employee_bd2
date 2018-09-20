@@ -18,12 +18,9 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
     private final String UPDATE_DEPART = "UPDATE department SET name=? WHERE id=?";
     private final String DELETE_DEPART = "DELETE FROM department WHERE id=?";
     private final String INSERT_DEPART = "INSERT INTO department (name) VALUES(?)";
-
-private final String COUNT_EMPL_IN_DEPART = "SELECT DEPARTMENT_ID  as ID,NAME,\n COUNT(*) as EMPL_COUNT FROM (\n" +
-             "SELECT NAME, DEPARTMENT_ID FROM EMPLOYEE\n" +
-             "INNER JOIN EMPLOYEE_DEPARTMENT ON EMPLOYEE.ID = EMPLOYEE_DEPARTMENT.EMPLOYEE_ID\n" +
-             "INNER JOIN DEPARTMENT ON EMPLOYEE_DEPARTMENT.DEPARTMENT_ID = DEPARTMENT.ID\n" +
-             ")GROUP BY NAME;";
+    private final String COUNT_EMPL_IN_DEPART = "SELECT id, name,COUNT(*) AS empl_count\n " +
+            "FROM (SELECT d.id, name FROM department d INNER JOIN employee e ON d.id = e.department_id)\n" +
+            "GROUP BY name";
 
     @Override
     public void create(Department department) {
@@ -127,7 +124,6 @@ private final String COUNT_EMPL_IN_DEPART = "SELECT DEPARTMENT_ID  as ID,NAME,\n
         }
         return map;
     }
-
 }
 
 
