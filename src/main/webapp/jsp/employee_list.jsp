@@ -96,22 +96,21 @@
             <td>${empl.birthday}</td>
             <td>${empl.department.name}</td>
             <form action="editEmployee" method="post">
-                    <%--  <button type="submit" name="update" value="${user.id}">update</button>--%>
                 <td><a href="/editEmployee?id=<c:out value='${empl.id}'/>">Edit</a></td>
+            </form>
+            <form action="deleteEmployee?id=" method="get">
+                <td><a href="/deleteEmployee?id=<c:out value='${empl.id}'/>">Delete</a></td>
 
-                <form action="deleteEmployee?id=" method="get">
-                    <td><a href="/deleteEmployee?id=<c:out value='${empl.id}'/>">Delete</a></td>
-
-                </form>
+            </form>
         </tr>
     </c:forEach>
 
     </tbody>
-        <tr>
+    <tr>
 
-                <button type="submit" name="save" value="AddNew">Add User</button>
+        <button type="submit" name="save" value="AddNew">Add User</button>
 
-        </tr>
+    </tr>
 </table>
 
 </body>

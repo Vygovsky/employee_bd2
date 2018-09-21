@@ -17,6 +17,7 @@
             <th>Название департамента</th>
             <th>Колличество сотрудников</th>
             <th>Список сотрудников</th>
+            <th>Добавить дпартамент</th>
             <th>Редактировать</th>
             <th>Удалить</th>
         </tr>
@@ -31,6 +32,11 @@
                 <form action="/employee/listEmployee" method="get">
                     <td><a href="/employee/listEmployee">List</a></td>
                 </form>
+
+                <form method="post" action="/employee/departments">
+                    <td><a href="/employee/departments">Add Depart</a></td>
+                </form>
+
 
                 <form action="/editDepart?id=${employee.id}" method="post">
                     <td><a href="/editEmployee?id=<c:out value='${employee.id}'/>">Edit</a></td>

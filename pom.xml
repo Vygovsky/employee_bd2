@@ -7,6 +7,7 @@
     <groupId>ua.ukr.net</groupId>
     <artifactId>employee_db</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
