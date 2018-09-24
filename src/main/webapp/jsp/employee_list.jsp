@@ -88,13 +88,14 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="empl" items="${list}">
+    <c:forEach var="entryset" items="${emplDepEntrySet}">
         <tr>
-            <td>${empl.id}</td>
-            <td>${empl.name}</td>
-            <td>${empl.email}</td>
-            <td>${empl.birthday}</td>
-            <td>${empl.department.name}</td>
+            <td>${entryset.key.id}</td>
+            <td>${entryset.key.name}</td>
+            <td>${entryset.key.email}</td>
+            <td>${entryset.key.birthday}</td>
+            <td>${entryset.value.name}</td>
+
             <form action="editEmployee" method="post">
                 <td><a href="/editEmployee?id=<c:out value='${empl.id}'/>">Edit</a></td>
             </form>
@@ -104,13 +105,11 @@
             </form>
         </tr>
     </c:forEach>
-
-    </tbody>
     <tr>
-
         <button type="submit" name="save" value="AddNew">Add User</button>
-
     </tr>
+    </tbody>
+
 </table>
 
 </body>

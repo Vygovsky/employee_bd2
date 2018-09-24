@@ -74,7 +74,7 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
                 employee.setName(resultSet.getString("FIRST_NAME"));
                 employee.setEmail(resultSet.getString("EMAIL"));
                 employee.setBirthday(resultSet.getDate("BIRTHDAY"));
-                employee.setDepartID(resultSet.getLong("DEPART_ID"));
+                employee.setDepartID(resultSet.getLong("DEPARTMENT_ID"));
                 listEmployee.add(employee);
 
             }

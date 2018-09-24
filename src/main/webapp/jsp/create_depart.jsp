@@ -17,10 +17,9 @@
 <div align="center">
     <h1>Создать департамент</h1>
 </div>
-<form method="POST" action="/create_depart.jsp">
+<form method="POST" action="/employee/departments">
     <div class="form-style-6">
         <table>
-
             <tr>
                 <td>Имя департамента :</td>
                 <td><label>

@@ -4,54 +4,33 @@
 <head>
     <title>DepartList</title>
 </head>
-<div align="center">
-    <h1>Департаменты</h1>
-</div>
-
-
-<form>
+<body>
+    <div align="center"><h1>Департаменты</h1></div>
     <table align="center" id="customers" width="600">
         <thead>
-        <tr>
-            <th>#</th>
-            <th>Название департамента</th>
-            <th>Колличество сотрудников</th>
-            <th>Список сотрудников</th>
-            <th>Добавить дпартамент</th>
-            <th>Редактировать</th>
-            <th>Удалить</th>
-        </tr>
+            <tr>
+                <th>#</th>
+                <th>Название департамента</th>
+                <th>Колличество сотрудников</th>
+                <th>Список сотрудников</th>
+                <th>Добавить дпартамент</th>
+                <th>Редактировать</th>
+                <th>Удалить</th>
+            </tr>
         </thead>
         <tbody>
-        <c:forEach var="depart" items="${mapDepart}">
-            <tr>
-                <td>${depart.key.id}</td>
-                <td>${depart.key.name}</td>
-                <td>${depart.value}</td>
-
-                <form action="/employee/listEmployee" method="get">
+            <c:forEach var="depart" items="${mapDepart}">
+                <tr>
+                    <td>${depart.key.id}</td>
+                    <td>${depart.key.name}</td>
+                    <td>${depart.value}</td>
                     <td><a href="/employee/listEmployee">List</a></td>
-                </form>
-
-                <form method="post" action="/employee/departments">
                     <td><a href="/employee/departments">Add Depart</a></td>
-                </form>
-
-
-                <form action="/editDepart?id=${employee.id}" method="post">
-                    <td><a href="/editEmployee?id=<c:out value='${employee.id}'/>">Edit</a></td>
-                </form>
-
-                <form action="/deleteDepart?id=" method="get">
+                    <td><a href="/editDepart?id=<c:out value='${depart.key.id}'/>">Edit</a></td>
                     <td><a href="/deleteDepart?id=<c:out value='${depart.key.id}'/>">Delete</a></td>
-                </form>
-            </tr>
-        </c:forEach>
-
+                </tr>
+            </c:forEach>
         </tbody>
-
     </table>
-</form>
-
 </body>
 </html>
