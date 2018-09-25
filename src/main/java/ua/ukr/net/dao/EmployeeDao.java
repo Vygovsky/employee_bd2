@@ -1,5 +1,6 @@
 package ua.ukr.net.dao;
 
+import ua.ukr.net.model.Department;
 import ua.ukr.net.model.Employee;
 
 import java.util.List;
@@ -18,5 +19,7 @@ public interface EmployeeDao {
 
     Employee findByEmail(String email);
 
-/*   void updateDepartForEmployee(Long emplId, Long departId);*/
+    void deleteAllEmplForDepart(Long departID);
+
+/*void updateDepartForEmployee(Long emplId, Long departId);*/
 }

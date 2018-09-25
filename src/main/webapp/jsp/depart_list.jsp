@@ -25,8 +25,8 @@
                     <td>${depart.key.name}</td>
                     <td>${depart.value}</td>
                     <td><a href="/employee/listEmployee">List</a></td>
-                    <td><a href="/employee/departments">Add Depart</a></td>
-                    <td><a href="/editDepart?id=<c:out value='${depart.key.id}'/>">Edit</a></td>
+                    <td><a href="/employee/departments?action=add">Add Depart</a></td>
+                    <td><a href="/editDepart?action=edit&id=<c:out value='${depart.key.id}'/>">Edit</a></td>
                     <td><a href="/deleteDepart?id=<c:out value='${depart.key.id}'/>">Delete</a></td>
                 </tr>
             </c:forEach>

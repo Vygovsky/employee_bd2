@@ -35,14 +35,10 @@ public class EmployeeCreateServlet extends HttpServlet {
         resp.setContentType("text/html; charset=utf-8");
 
         Employee employee = new Employee();
-        Department department=new Department();
         employee.setName(req.getParameter("name"));
         employee.setEmail(req.getParameter("email"));
         LocalDate birthday = LocalDate.parse(req.getParameter("date"));
         employee.setBirthday(java.sql.Date.valueOf(birthday));
-       /* department.s
-        employee.setDepartment(req.getParameter("department"));*/
-
 
         employeeDao.create(employee);
 

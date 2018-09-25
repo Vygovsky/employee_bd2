@@ -17,7 +17,8 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
     private final String UPDATE_EMPLOYEE = "UPDATE employee SET first_name=?, email=?, birthday=?, department_id=? WHERE id=?";
     private final String DELETE = "DELETE FROM employee WHERE id=?";
     private final String INSERT_EMPL = "INSERT INTO employee (first_name, email, birthday, department_id) VALUES(?,?,?,?)";
-   // private final String UPDATE_BY_DEPART_FOR_IMPL = "UPDATE employee_department SET department_id=? WHERE employee_id=?";
+    private final String DELETE_EMPL_DEPART_ID = "DELETE FROM employee WHERE department_id = ?";
+    // private final String UPDATE_BY_DEPART_FOR_IMPL = "UPDATE employee_department SET department_id=? WHERE employee_id=?";
 
 
     @Override
@@ -124,6 +125,20 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
         }
         return employeeMail;
     }
+
+    @Override
+    public void deleteAllEmplForDepart(Long departID) {
+        try {
+            PreparedStatement preparedStatement = createConnection().prepareStatement(DELETE_EMPL_DEPART_ID);
+            preparedStatement.setLong(1, departID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
     /*@Override

@@ -14,7 +14,7 @@ import java.util.Map;
 
 @WebServlet("/employee/departments")
 public class DepartServlet extends HttpServlet {
-   // private String listDepart = " ";
+    // private String listDepart = " ";
     //  private String insertOrEditDepart = "/jsp/create_depart.jsp";
 /*для каждого эмпла из листа employeeList тебе надо вытащить из базы департ по ID, и на каждой итерации (для каждого эмпла) в мапу сложить эмпла как ключ а департ как значение
 ну и передать это все на jsp
@@ -41,12 +41,33 @@ public class DepartServlet extends HttpServlet {
         if(action.equalsIgnoreCase("listDepart")){
 
         }*/
-       Map<Department, Long> departmentCardinality = jdbcDepartmentDao.getCountOfEmployeesByDepartments();
+        String action = req.getParameter("action");
+        switch (action == null ? "list" : action) {
+            case "list":
+                listOfDepartments(req, resp);
+                break;
+            case "add":
+                req.getServletContext().getRequestDispatcher("/jsp/create_depart.jsp").forward(req, resp);
+                break;
+            case "edit":
+                updateDepartForm(req, resp);
+                break;
+            case "delete": // это здесь нужно )))))) или нет хз я посмотрю
+        }
+    }
+
+    private void updateDepartForm(HttpServletRequest req, HttpServletResponse resp) {
+
+    }
+
+    private void listOfDepartments(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Map<Department, Long> departmentCardinality = jdbcDepartmentDao.getCountOfEmployeesByDepartments();
         req.setAttribute("mapDepart", departmentCardinality.entrySet());
         req.getServletContext().getRequestDispatcher("/jsp/depart_list.jsp").forward(req, resp);
     }
 
-
+    //todo написать метод private void updateDepartForm(HttpServletRequest req, HttpServletResponse resp) {...}, в которм вытащиши id департа -> вытащишь Департ из БД по id -> создашь новый департ и засетишь ему id и name и засетишь весь департ как параметр в req потом форварднешь на  req.getServletContext().getRequestDispatcher("/jsp/create_depart.jsp").forward(req, resp);
+    // а в свиче вызовешь этот метод
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
