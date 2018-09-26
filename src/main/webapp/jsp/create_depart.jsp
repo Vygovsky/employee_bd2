@@ -18,12 +18,14 @@
     <h1>Создать департамент</h1>
 </div>
 <form method="POST" action="/employee/departments">
+
     <div class="form-style-6">
         <table>
             <tr>
                 <td>Имя департамента :</td>
                 <td><label>
-                    <input type="text" name="name">
+                    <input type="text" name="name"
+                           value="<c:out value='${depart.key.id}'/>"/>
                 </label><br></td>
             </tr>
 

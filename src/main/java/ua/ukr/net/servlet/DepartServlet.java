@@ -56,7 +56,13 @@ public class DepartServlet extends HttpServlet {
         }
     }
 
-    private void updateDepartForm(HttpServletRequest req, HttpServletResponse resp) {
+    private void updateDepartForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long departId = Long.parseLong(req.getParameter("ID"));
+        Department department = jdbcDepartmentDao.findID(departId);
+        RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/jsp/create_depart.jsp");
+        req.setAttribute("depart", department);
+        dispatcher.forward(req, resp);
+
 
     }
 
