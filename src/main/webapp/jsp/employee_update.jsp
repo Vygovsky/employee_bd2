@@ -34,7 +34,7 @@
                 <br/>
             </tr>
             <tr>
-                <td>День рожления :</td>
+                <td>День рождения :</td>
                 <td><input type="date" name="date" value="${employee.birthday}"></td>
             </tr>
             <br/>
@@ -42,8 +42,7 @@
             <tr>
                 <td>Департамент :</td>
                 <td><select name="departments">
-                    <c:forEach var="depart" items="${departments}" >
-
+                    <c:forEach var="depart" items="${departments}">
                         <option value="${depart.id}">${depart.name}</option>
                     </c:forEach>
 

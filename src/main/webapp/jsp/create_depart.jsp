@@ -22,13 +22,15 @@
     <div class="form-style-6">
         <table>
             <tr>
-                <td>Имя департамента :</td>
-                <td><label>
-                    <input type="text" name="name"
-                           value="<c:out value='${depart.key.id}'/>"/>
-                </label><br></td>
+                <td><input type="hidden" name="id"
+                           value="${depart.id}"/></td>
             </tr>
-
+            <tr>
+                <td>Имя департамента :</td>
+                <td><input type="text" name="name"
+                           value="${depart.name}"/></td>
+                <br/>
+            </tr>
             <tr>
                 <td><input type="submit" value="Отправить"></td>
             </tr>

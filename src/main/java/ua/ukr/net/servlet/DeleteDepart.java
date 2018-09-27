@@ -1,3 +1,4 @@
+/*
 package ua.ukr.net.servlet;
 
 import ua.ukr.net.dao.JdbcDepartmentDao;
@@ -26,3 +27,4 @@ public class DeleteDepart extends HttpServlet {
 
     }
 }
+*/

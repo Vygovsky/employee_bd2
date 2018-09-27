@@ -43,7 +43,7 @@ public class EmployeeEditServlet extends HttpServlet {
         employee.setEmail(req.getParameter("email"));
         LocalDate date = LocalDate.parse(req.getParameter("date"));
         employee.setBirthday(Date.valueOf(date));
-        Long departId = Long.parseLong(req.getParameter("departments"));
+       // Long departId = Long.parseLong(req.getParameter("departments"));
 
         employeeDao.update(employee);
         //employeeDao.updateDepartForEmployee(employee.getId(), departId);

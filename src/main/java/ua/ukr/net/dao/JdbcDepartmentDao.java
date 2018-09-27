@@ -20,7 +20,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
     private final String INSERT_DEPART = "INSERT INTO department (name) VALUES(?)";
     private final String COUNT_EMPL_IN_DEPART = "SELECT depart_id,name, COUNT(e_id) empl_count\n" +
             "FROM (SELECT  e.id e_id, d.id depart_id, d.name FROM department d LEFT JOIN employee e on d.id = e.department_id)\n" +
-            "GROUP BY NAME";
+            "GROUP BY depart_id";
 
     @Override
     public void create(Department department) {
@@ -100,6 +100,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 department.setId(resultSet.getLong("ID"));
+                department.setName(resultSet.getString("NAME"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
