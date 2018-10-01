@@ -19,15 +19,14 @@ import java.util.stream.Collectors;
 @WebServlet("/employee/listEmployee")
 public class EmployeeList extends HttpServlet {
 
-    private JdbcEmployeeDao employeeDao=new JdbcEmployeeDao();
-    private JdbcDepartmentDao departmentDao=new JdbcDepartmentDao();
+    private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
+    private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Employee> employeeList = employeeDao.findAll();
-       // Map<Employee, Department> employeeDepartmentNameMap = new HashMap<>();
-
-        req.setAttribute("emplDepEntrySet", employeeList);//);
-        req.getServletContext().getRequestDispatcher("/jsp/employee_list.jsp").forward(req, resp);
+   /*     Long id = Long.parseLong(req.getParameter("id"));
+        List<Employee> employeeList = employeeDao.employeeByDeprtmentId(id);
+        req.setAttribute("emplDepEntrySet", employeeList);
+        req.getServletContext().getRequestDispatcher("/jsp/employee_list.jsp").forward(req, resp);*/
     }
 }

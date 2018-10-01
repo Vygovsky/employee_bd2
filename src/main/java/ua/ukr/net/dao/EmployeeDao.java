@@ -21,5 +21,8 @@ public interface EmployeeDao {
 
     void deleteAllEmplForDepart(Long departID);
 
-/*void updateDepartForEmployee(Long emplId, Long departId);*/
+    /*void updateDepartForEmployee(Long emplId, Long departId);*/
+
+    List<Employee> employeeByDeprtmentId(Long departmentId);
+
 }

@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
-    private final String FIND_ALL_EMPL = "SELECT * FROM EMPLOYEE";
+    private static final String EMPL_BY_DEPART_ID = "SELECT employee.id,employee.first_name, employee.email, employee.birthday,\n" +
+            "d.name FROM employee LEFT JOIN department d on employee.department_id = d.id where d.id=?;";
+    private final String FIND_ALL_EMPL = "SELECT * FROM employee";
     private final String FIND_BY_ID_EMPL = "SELECT * FROM employee WHERE id=?";
     private final String FIND_BY_EMAIL_EMPL = "SELECT * FROM employee WHERE email=?";
     private final String UPDATE_EMPLOYEE = "UPDATE employee SET first_name=?, email=?, birthday=?, department_id=? WHERE id=?";
@@ -77,7 +79,6 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
                 employee.setBirthday(resultSet.getDate("BIRTHDAY"));
                 employee.setDepartID(resultSet.getLong("DEPARTMENT_ID"));
                 listEmployee.add(employee);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,11 +138,33 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
         }
     }
 
+    @Override
+    public List<Employee> employeeByDeprtmentId(Long departmentId) {
+        List<Employee> listEmployee = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = createConnection().prepareStatement(EMPL_BY_DEPART_ID);
+            preparedStatement.setLong(1, departmentId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Employee employee = new Employee();
+                employee.setId(resultSet.getLong("ID"));
+                employee.setName(resultSet.getString("FIRST_NAME"));
+                employee.setEmail(resultSet.getString("EMAIL"));
+                employee.setBirthday(resultSet.getDate("BIRTHDAY"));
+                employee.setName(resultSet.getString("NAME"));
+                listEmployee.add(employee);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listEmployee;
+    }
 
 
+}
 
 
-    /*@Override
+ /*   @Override
     public void updateDepartForEmployee(Long emplId, Long departId) {
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(UPDATE_BY_DEPART_FOR_IMPL);
@@ -152,5 +175,5 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
             e.printStackTrace();
         }
     }*/
-}
+
 
