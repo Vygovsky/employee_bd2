@@ -88,19 +88,19 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="entryset" items="${emplDepEntrySet}">
+    <c:forEach var="employee" items="${employeeList}">
         <tr>
-            <td>${entryset.id}</td>
-            <td>${entryset.name}</td>
-            <td>${entryset.email}</td>
-            <td>${entryset.birthday}</td>
-            <td>${entryset.name}</td>
+            <td>${employee.id}</td>
+            <td>${employee.name}</td>
+            <td>${employee.email}</td>
+            <td>${employee.birthday}</td>
+            <td>${employee.department.name}</td>
 
             <form action="editEmployee" method="post">
-                <td><a href="/editEmployee?id=<c:out value='${entryset.id}'/>">Edit</a></td>
+                <td><a href="/editEmployee?id=<c:out value='${employee.id}'/>">Edit</a></td>
             </form>
 
-            <td><a href="/deleteEmployee?id=<c:out value='${entryset.id}'/>">Delete</a></td>
+            <td><a href="/deleteEmployee?id=<c:out value='${employee.id}'/>">Delete</a></td>
 
         </tr>
     </c:forEach>

@@ -24,10 +24,10 @@
                     <td>${depart.key.id}</td>
                     <td>${depart.key.name}</td>
                     <td>${depart.value}</td>
-                    <td><a href="/employee/listEmployee">List</a></td>
+                    <td><a href="/employee/listEmployee?departmentId=${depart.key.id}">List</a></td>
                     <td><a href="/employee/departments?action=add">Add Depart</a></td>
-                    <td><a href="/employee/departments?action=edit&id=<c:out value='${depart.key.id}'/>">Edit</a></td>
-                    <td><a href="/employee/departments?action=delete&id=<c:out value='${depart.key.id}'/>">Delete</a></td>
+                    <td><a href="/employee/departments?action=edit&id=${depart.key.id}">Edit</a></td>
+                    <td><a href="/employee/departments?action=delete&id=${depart.key.id}">Delete</a></td>
                 </tr>
             </c:forEach>
         </tbody>

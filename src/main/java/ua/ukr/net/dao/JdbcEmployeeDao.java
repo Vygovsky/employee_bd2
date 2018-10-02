@@ -92,7 +92,6 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(FIND_BY_ID_EMPL);
             preparedStatement.setLong(1, id);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 employee.setId(resultSet.getLong("ID"));
@@ -139,8 +138,9 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
     }
 
     @Override
-    public List<Employee> employeeByDeprtmentId(Long departmentId) {
+    public List<Employee> employeeByDepartmentId(Long departmentId) {
         List<Employee> listEmployee = new ArrayList<>();
+        Department department = new Department();
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(EMPL_BY_DEPART_ID);
             preparedStatement.setLong(1, departmentId);
@@ -151,7 +151,9 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
                 employee.setName(resultSet.getString("FIRST_NAME"));
                 employee.setEmail(resultSet.getString("EMAIL"));
                 employee.setBirthday(resultSet.getDate("BIRTHDAY"));
-                employee.setName(resultSet.getString("NAME"));
+                department.setId(resultSet.getLong("ID"));
+                department.setName(resultSet.getString("NAME"));
+                employee.setDepartment(department);
                 listEmployee.add(employee);
             }
         } catch (SQLException e) {
@@ -159,8 +161,6 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
         }
         return listEmployee;
     }
-
-
 }
 
 

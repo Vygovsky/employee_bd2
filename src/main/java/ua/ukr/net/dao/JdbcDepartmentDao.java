@@ -93,7 +93,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
 
     @Override
     public Department findID(Long id) {
-        Department department = new Department(0, null);
+        Department department = new Department();
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(FIND_BY_ID_DEPART);
             preparedStatement.setLong(1, id);

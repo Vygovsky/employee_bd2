@@ -3,7 +3,6 @@ package ua.ukr.net.servlet;
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +32,7 @@ public class DepartServlet extends HttpServlet {
                 break;
             case "delete":
                 deleteDepartAndEmpl(req, resp);
-                break;// это здесь нужно )))))) или нет хз я посмотрю
+                break;
         }
     }
 
@@ -41,7 +40,7 @@ public class DepartServlet extends HttpServlet {
         Long departId = Long.parseLong(req.getParameter("id"));
         employeeDao.deleteAllEmplForDepart(departId);
         departmentDao.remove(departId);
-        listOfDepartments(req, resp); // ты здесь использовал редирект, походу нельзя из сервлета сам в себя редиректить, а так просто вызывается метод который достает все данные из бд и редиректит на jsp у меня все!
+        listOfDepartments(req, resp);
     }
 
 
@@ -58,11 +57,6 @@ public class DepartServlet extends HttpServlet {
         req.getServletContext().getRequestDispatcher("/jsp/depart_list.jsp").forward(req, resp);
     }
 
-    //todo написать метод private void updateDepartForm(HttpServletRequest req, HttpServletResponse resp) {...}, в
-// которм вытащиши id департа -> вытащишь Департ из БД по id -> создашь новый департ и засетишь ему id и name и
-// засетишь весь департ как параметр в req потом форварднешь на
-// req.getServletContext().getRequestDispatcher("/jsp/create_depart.jsp").forward(req, resp);
-// а в свиче вызовешь этот метод
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -77,6 +71,6 @@ public class DepartServlet extends HttpServlet {
             department.setId(departId);
             departmentDao.update(department);
         }
-        listOfDepartments(req, resp); //тоже самое с редиректами, а то будет бесконечно колесико крутиться на страничке
+        listOfDepartments(req, resp);
     }
 }
