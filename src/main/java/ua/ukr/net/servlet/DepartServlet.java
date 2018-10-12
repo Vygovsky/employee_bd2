@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet("/employee/departments")
+@WebServlet("/departments")
 public class DepartServlet extends HttpServlet {
 
     private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();

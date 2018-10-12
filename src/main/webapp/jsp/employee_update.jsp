@@ -54,7 +54,6 @@
             <br/>
             <tr>
                 <td><input type="submit" value="Отправить"></td>
-                <%-- <button type="submit" name="save" value="Save">Save</button>--%>
             </tr>
 
         </table>

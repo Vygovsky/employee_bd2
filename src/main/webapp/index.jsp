@@ -6,6 +6,6 @@
     <title>Insert title here</title>
 </head>
 <body>
-<jsp:forward page="/employee/departments"/>
+<jsp:forward page="/departments"/>
 </body>
 </html>

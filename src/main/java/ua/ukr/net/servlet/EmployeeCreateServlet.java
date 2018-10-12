@@ -19,7 +19,6 @@ import java.time.LocalDate;
 public class EmployeeCreateServlet extends HttpServlet {
 
     private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
-    private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,6 +44,6 @@ public class EmployeeCreateServlet extends HttpServlet {
         //just for ferrying
         employee = employeeDao.findByEmail(employee.getEmail());
         req.setAttribute("employee", employee);
-        req.getRequestDispatcher("/jsp/employee_result.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/employee_list.jsp").forward(req, resp);
     }
 }

@@ -15,8 +15,9 @@ public class EmployeeDeleteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Long delete = Long.parseLong(req.getParameter("id"));
-        employeeDao.remove(delete);
-        resp.sendRedirect("/employee/listEmployee");
+        Long employeeId = Long.parseLong(req.getParameter("id"));
+        Long departmentId = Long.parseLong(req.getParameter("departmentId"));
+        employeeDao.remove(employeeId);
+        resp.sendRedirect("/employee/listEmployee?departmentId=" + departmentId);
     }
 }

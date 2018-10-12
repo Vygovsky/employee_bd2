@@ -5,12 +5,11 @@ import com.google.gson.Gson;
 import java.sql.Date;
 
 public class Employee {
-
     private long id;
     private String name;
     private String email;
     private Date birthday;
-    private Long departID;
+    private Long departID; // вот это нахуй здесь не надо потому что ниже строчкой есть весь департамент
     private Department department;
 
     public Employee() {
@@ -22,7 +21,15 @@ public class Employee {
         this.birthday = birthday;
     }
 
-    public Employee(String name, String email, Date birthday, Long departID) {
+    public Employee(long id, String name, String email, Date birthday, Long departID) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.birthday = birthday;
+        this.departID = departID;
+    }
+
+    public Employee(Long id, String name, String email, Date birthday, Long departID) {
         this.name = name;
         this.email = email;
         this.birthday = birthday;

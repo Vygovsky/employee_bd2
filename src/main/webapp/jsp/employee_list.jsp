@@ -74,6 +74,9 @@
 <div align="center">
     <h1>List users by departments</h1>
 </div>
+<div align="center">
+<tr><td><h1><a href="${pageContext.request.contextPath}/employee/create">Add User</a></h1></td></tr>
+</div>
 <table align="center" id="customers" width="600">
     <%--<table id="customers">--%>
     <thead>
@@ -96,20 +99,15 @@
             <td>${employee.birthday}</td>
             <td>${employee.department.name}</td>
 
-            <form action="editEmployee" method="post">
-                <td><a href="/editEmployee?id=<c:out value='${employee.id}'/>">Edit</a></td>
+            <form action="/editEmployee" method="post">
+                <td><a href="/editEmployee?id=${employee.id}&departmentId=${departmentId}">Edit</a></td>
             </form>
 
-            <td><a href="/deleteEmployee?id=<c:out value='${employee.id}'/>">Delete</a></td>
-
+            <td><a href="/deleteEmployee?id=${employee.id}&departmentId=${departmentId}">Delete</a></td>
         </tr>
     </c:forEach>
-    <tr>
-        <button type="submit" name="save" value="AddNew">Add User</button>
-    </tr>
     </tbody>
 
 </table>
-
 </body>
 </html>

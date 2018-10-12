@@ -37,17 +37,21 @@ public class EmployeeEditServlet extends HttpServlet {
         resp.setContentType("text/html; charset=utf-8");
 
         Employee employee = new Employee();
+
         String id = req.getParameter("id");
+        Long departmentId = Long.parseLong(req.getParameter("departments"));
+        employee.setDepartID(departmentId);
         employee.setId(Long.parseLong(id));
         employee.setName(req.getParameter("name"));
         employee.setEmail(req.getParameter("email"));
         LocalDate date = LocalDate.parse(req.getParameter("date"));
         employee.setBirthday(Date.valueOf(date));
 
+
         employeeDao.update(employee);
 
         req.setAttribute("employee", employee);
-        resp.sendRedirect("/employee/listEmployee");
+        resp.sendRedirect("/employee/listEmployee?departmentId=" + departmentId);
     }
 }
 
