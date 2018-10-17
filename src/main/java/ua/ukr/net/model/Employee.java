@@ -9,7 +9,7 @@ public class Employee {
     private String name;
     private String email;
     private Date birthday;
-    private Long departID; // вот это нахуй здесь не надо потому что ниже строчкой есть весь департамент
+    private Long departID;
     private Department department;
 
     public Employee() {

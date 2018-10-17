@@ -34,16 +34,16 @@ public class EmployeeCreateServlet extends HttpServlet {
         resp.setContentType("text/html; charset=utf-8");
 
         Employee employee = new Employee();
+
         employee.setName(req.getParameter("name"));
         employee.setEmail(req.getParameter("email"));
         LocalDate birthday = LocalDate.parse(req.getParameter("date"));
         employee.setBirthday(java.sql.Date.valueOf(birthday));
-
+        Long departId = Long.parseLong(req.getParameter("organizations"));
+        employee.setDepartID(departId);
         employeeDao.create(employee);
 
-        //just for ferrying
-        employee = employeeDao.findByEmail(employee.getEmail());
         req.setAttribute("employee", employee);
-        req.getRequestDispatcher("/jsp/employee_list.jsp").forward(req, resp);
+        resp.sendRedirect("/employee/listEmployee?departmentId="+departId );
     }
 }

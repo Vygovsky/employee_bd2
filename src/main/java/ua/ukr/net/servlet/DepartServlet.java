@@ -3,6 +3,7 @@ package ua.ukr.net.servlet;
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,11 +65,12 @@ public class DepartServlet extends HttpServlet {
 
         Department department = new Department();
         department.setName(req.getParameter("name"));
-        Long departId = Long.parseLong(req.getParameter("id"));
-        if (departId == null) {
+        String departId = req.getParameter("depart");
+
+        if (departId == null || departId.isEmpty()) {
             departmentDao.create(department);
         } else {
-            department.setId(departId);
+            department.setId(Long.parseLong(departId));
             departmentDao.update(department);
         }
         listOfDepartments(req, resp);

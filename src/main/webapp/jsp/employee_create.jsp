@@ -8,9 +8,10 @@
 </head>
 
 <body>
-<div align="center" >
+<div align="center">
     <h1>Создать сотрудника</h1>
 </div>
+
 <form method="POST" action="/employee/create">
     <div class="form-style-6">
         <table>
@@ -32,12 +33,15 @@
             <tr>
                 <td>Департамент :</td>
                 <td><label>
-                    <select name="organization">
-                        <option selected value="Google">Google</option>
-                        <option value="Yahoo">Yahoo</option>
-                        <option value="Oracle">Oracle</option>
-                        <option value="Linux">Linux</option>
+                    <select name="organizations">
+                        <option selected value="-1">-Select Department-</option>
+                        <option value="1" >Google</option>
+                        <option value="2" >Yahoo</option>
+                        <option value="3">Oracle</option>
+                        <option value="4">Linux</option>
+
                     </select>
+
                 </label>
                 </td>
             </tr>
