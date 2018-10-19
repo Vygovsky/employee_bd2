@@ -11,6 +11,8 @@
 <div align="center">
     <h1>Создать департамент</h1>
 </div>
+
+
 <form method="POST" action="/departments">
 
     <div class="form-style-6">

@@ -75,9 +75,10 @@
     <h1>List users by departments</h1>
 </div>
 <div align="center">
-    <td><h1><a href="${pageContext.request.contextPath}/employee/create?departId="${departId}>Add User</a>
+    <td><h1><a href="${pageContext.request.contextPath}/employee/create?departId="${departmentId}>Add User</a>
         &nbsp;&nbsp;&nbsp;
         <a href="http://localhost:8081">Depart-menu</a></h1></td>
+
 </div>
 <table align="center" id="customers" width="600">
     <%--<table id="customers">--%>

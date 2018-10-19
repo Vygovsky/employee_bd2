@@ -18,7 +18,8 @@
         <table>
             <tr>
                 <td>Номер сотрудника :</td>
-                <td><c:out value="${employee.id} "/></td>
+                <td><input type="hidden" name="id"
+                           value="${employee.id} "/></td>
             </tr>
             <br/>
             <tr>

@@ -33,12 +33,13 @@
             <tr>
                 <td>Департамент :</td>
                 <td><label>
-                    <select name="organizations">
-                        <option selected value="-1">-Select Department-</option>
-                        <option value="1" >Google</option>
-                        <option value="2" >Yahoo</option>
-                        <option value="3">Oracle</option>
-                        <option value="4">Linux</option>
+
+                    <select name="organizations" >
+                        <c:forEach var="organizations" items="${departments}">
+                        <option value="${organizations.id}" > <c:out value="${organizations.name}"/></option>
+                        </c:forEach>
+
+
 
                     </select>
 
@@ -47,6 +48,8 @@
             </tr>
             <tr>
                 <td><input type="submit" value="Отправить"></td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <td><input type="submit" value="Отмена"></td>
             </tr>
         </table>
     </div>

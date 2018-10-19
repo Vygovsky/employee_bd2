@@ -127,3 +127,62 @@ index*/
 .form-style-6 input[type="button"]:hover{
     background: #2EBC99;
 }
+
+#customers {
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+}
+
+#customers td, #customers th {
+    border: solid 1px #DDEEEE;
+    color: #333;
+    padding: 10px;
+
+}
+
+#customers tr:nth-child(even) {
+    background-color: #DDEFEF;
+    border: solid 1px #DDEEEE;
+    color: #336B6B;
+    padding: 10px;
+    text-align: center;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+#customers tr:hover {
+    background-color: #fff;
+}
+
+#customers tbody tr:nth-child(even) {
+    background-color: #EEF7EE;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #86af90;
+    color: white;
+}
+
+div {
+}
+
+#left {
+    text-align: left;
+}
+
+#right {
+    text-align: right;
+}
+
+#center {
+    text-align: center;
+}
+
+.content {
+    width: 75%; /* Ширина слоя */
+    background: #fc0; /* Цвет фона */
+}

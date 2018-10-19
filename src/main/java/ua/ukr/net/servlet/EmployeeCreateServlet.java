@@ -13,17 +13,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @WebServlet("/employee/create")
 public class EmployeeCreateServlet extends HttpServlet {
 
     private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
+    private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
+
+        List<Department> departments = departmentDao.findAll();
+        req.setAttribute("departments", departments);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/employee_create.jsp");
         dispatcher.forward(req, resp);
     }
@@ -41,9 +47,10 @@ public class EmployeeCreateServlet extends HttpServlet {
         employee.setBirthday(java.sql.Date.valueOf(birthday));
         Long departId = Long.parseLong(req.getParameter("organizations"));
         employee.setDepartID(departId);
-        employeeDao.create(employee);
 
+        employeeDao.create(employee);
+        req.setAttribute("departId", departId);
         req.setAttribute("employee", employee);
-        resp.sendRedirect("/employee/listEmployee?departmentId="+departId );
+        resp.sendRedirect("/employee/listEmployee?departmentId=" + departId);
     }
 }
