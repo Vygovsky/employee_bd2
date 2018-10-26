@@ -28,8 +28,11 @@ public class EmployeeCreateServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
 
+        Long currentDepartId = Long.parseLong(req.getParameter("currentDepartId")); //здесь забираем из параметра реквеста
+
         List<Department> departments = departmentDao.findAll();
         req.setAttribute("departments", departments);
+        req.setAttribute("currentDepartId", currentDepartId); //здесь сетим как атрибут для того, чтоб в employee_create.jsp можно было использовать его в условии
         RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/employee_create.jsp");
         dispatcher.forward(req, resp);
     }

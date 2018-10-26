@@ -13,7 +13,7 @@
 </div>
 
 
-<form method="POST" action="/departments">
+<form method="POST" action="/departments?action=edit&id=${depart.id}">
 
     <div class="form-style-6">
         <table>
@@ -29,6 +29,8 @@
             </tr>
             <tr>
                 <td><input type="submit" value="Отправить"></td>
+                &nbsp;&nbsp;&nbsp;
+                <td> <input type="button" value="Отмена" onclick='location.href="/departments"'></td>
             </tr>
         </table>
     </div>

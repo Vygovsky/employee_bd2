@@ -23,11 +23,15 @@ public class EmployeeEditServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long id = Long.parseLong(req.getParameter("id"));
-        Employee employee = employeeDao.findById(id);
+
+        Long employeeId = Long.parseLong(req.getParameter("id"));
+        Long currentDepartId = Long.parseLong(req.getParameter("currentDepartId"));
+        Employee employee = employeeDao.findById(employeeId);
         List<Department> departments = departmentDao.findAll();
+
         req.setAttribute("employee", employee);
         req.setAttribute("departments", departments);
+        req.setAttribute("currentDepartId", currentDepartId);
         req.getServletContext().getRequestDispatcher("/jsp/employee_update.jsp").forward(req, resp);
     }
 

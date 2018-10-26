@@ -8,11 +8,12 @@
 </head>
 
 <body>
+
 <div align="center">
     <h1>Создать сотрудника</h1>
 </div>
 
-<form method="POST" action="/employee/create">
+<form method="POST" action="${pageContext.request.contextPath}/employee/create">
     <div class="form-style-6">
         <table>
 
@@ -34,13 +35,11 @@
                 <td>Департамент :</td>
                 <td><label>
 
-                    <select name="organizations" >
-                        <c:forEach var="organizations" items="${departments}">
-                        <option value="${organizations.id}" > <c:out value="${organizations.name}"/></option>
+                    <select name="organizations">
+                        <c:forEach var="depart" items="${departments}">
+                            <option value="${depart.id}"
+                                    ${depart.id == currentDepartId ? 'selected="selected"' : null}>${depart.name}</option>
                         </c:forEach>
-
-
-
                     </select>
 
                 </label>
@@ -49,7 +48,7 @@
             <tr>
                 <td><input type="submit" value="Отправить"></td>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <td><input type="submit" value="Отмена"></td>
+                <td><input type="button" value="Отмена" onclick='location.href="/departments"'></td>
             </tr>
         </table>
     </div>

@@ -75,7 +75,7 @@
     <h1>List users by departments</h1>
 </div>
 <div align="center">
-    <td><h1><a href="${pageContext.request.contextPath}/employee/create?departId="${departmentId}>Add User</a>
+    <td><h1><a href="/employee/create?action=add&currentDepartId=${departmentId}">Add User</a>
         &nbsp;&nbsp;&nbsp;
         <a href="http://localhost:8081">Depart-menu</a></h1></td>
 
@@ -103,7 +103,7 @@
             <td>${employee.department.name}</td>
 
             <form action="/editEmployee" method="post">
-                <td><a href="/editEmployee?id=${employee.id}&departmentId=${departmentId}">Edit</a></td>
+                <td><a href="/editEmployee?id=${employee.id}&currentDepartId=${departmentId}">Edit</a></td>
             </form>
 
             <td><a href="/deleteEmployee?id=${employee.id}&departmentId=${departmentId}">Delete</a></td>

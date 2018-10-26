@@ -63,16 +63,15 @@ public class DepartServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
 
+        String departId = req.getParameter("id");
         Department department = new Department();
         department.setName(req.getParameter("name"));
-        String departId = req.getParameter("depart");
-
         if (departId == null || departId.isEmpty()) {
             departmentDao.create(department);
         } else {
             department.setId(Long.parseLong(departId));
             departmentDao.update(department);
         }
-        listOfDepartments(req, resp);
+        resp.sendRedirect("/departments");
     }
 }
