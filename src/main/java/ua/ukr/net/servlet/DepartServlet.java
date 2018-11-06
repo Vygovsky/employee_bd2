@@ -1,5 +1,6 @@
 package ua.ukr.net.servlet;
 
+
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
@@ -10,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet("/departments")
@@ -62,11 +67,20 @@ public class DepartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
+        Map<String, String> errorMassage = new HashMap<>();
+
 
         String departId = req.getParameter("id");
         Department department = new Department();
+
         department.setName(req.getParameter("name"));
+        if (department.getName().isEmpty() || department.getName() == null) {
+            errorMassage.put("name", "Please enter name");
+        } else if (!department.getName().matches("\\p{Alnum}+"))
+            errorMassage.put("name", "Please enter alphanumeric characters only");
+
         if (departId == null || departId.isEmpty()) {
+           req.setAttribute("error", errorMassage);
             departmentDao.create(department);
         } else {
             department.setId(Long.parseLong(departId));

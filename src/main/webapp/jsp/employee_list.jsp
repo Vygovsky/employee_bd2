@@ -77,7 +77,7 @@
 <div align="center">
     <td><h1><a href="/employee/create?action=add&currentDepartId=${departmentId}">Add User</a>
         &nbsp;&nbsp;&nbsp;
-        <a href="http://localhost:8081">Depart-menu</a></h1></td>
+        <a href="http://localhost:8083">Depart-menu</a></h1></td>
 
 </div>
 <table align="center" id="customers" width="600">
@@ -104,9 +104,10 @@
 
             <form action="/editEmployee" method="post">
                 <td><a href="/editEmployee?id=${employee.id}&currentDepartId=${departmentId}">Edit</a></td>
-            </form>
 
+            </form>
             <td><a href="/deleteEmployee?id=${employee.id}&departmentId=${departmentId}">Delete</a></td>
+
         </tr>
     </c:forEach>
     </tbody>
