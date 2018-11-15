@@ -26,18 +26,16 @@
             <tr>
                 <td>Имя сотрудника :</td>
                 <td><input type="text" name="name" required value="${name}"><br></td>
-                <td><span style="color: red">${errorMassage}</span></td>
+                <span style="color: red">${errorMassage}</span>
             </tr>
             <tr>
                 <td> Электронная почта :</td>
                 <td><input type="text" name="email" required value="${email}"></td>
-
                 <br>
             </tr>
             <tr>
                 <td>Дата рождения :</td>
                 <td><input type="date" name="date" required value="${date}"></td>
-
                 <br>
             </tr>
             <tr>
@@ -50,7 +48,6 @@
                                 ${depart.id == currentDepartId ? 'selected="selected"' : null}>${depart.name}</option>
                         </c:forEach>
                     </select>
-
                 </label>
                 </td>
             </tr>

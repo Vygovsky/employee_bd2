@@ -110,18 +110,22 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(FIND_BY_EMAIL_EMPL);
             preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                employeeMail.setId(resultSet.getLong("ID"));
-                employeeMail.setName(resultSet.getString("FIRST_NAME"));
-                employeeMail.setEmail(resultSet.getString("EMAIL"));
-                employeeMail.setBirthday(resultSet.getDate("BIRTHDAY"));
-                employeeMail.setDepartID(resultSet.getLong("DEPART_ID"));
-            }
+            repeatSQLRequests(employeeMail, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return employeeMail;
+    }
+
+    private void repeatSQLRequests(Employee employeeMail, PreparedStatement preparedStatement) throws SQLException {
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            employeeMail.setId(resultSet.getLong("ID"));
+            employeeMail.setName(resultSet.getString("FIRST_NAME"));
+            employeeMail.setEmail(resultSet.getString("EMAIL"));
+            employeeMail.setBirthday(resultSet.getDate("BIRTHDAY"));
+            employeeMail.setDepartID(resultSet.getLong("DEPARTMENT_ID"));
+        }
     }
 
     @Override
@@ -161,17 +165,5 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
     }
 }
 
-
- /*   @Override
-    public void updateDepartForEmployee(Long emplId, Long departId) {
-        try {
-            PreparedStatement preparedStatement = createConnection().prepareStatement(UPDATE_BY_DEPART_FOR_IMPL);
-            preparedStatement.setLong(1, departId);
-            preparedStatement.setLong(2, emplId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 
 

@@ -47,9 +47,7 @@
                         <option value="${depart.id}"
                             ${depart.id == currentDepartId ? 'selected="selected"' : null}>${depart.name}</option>
                     </c:forEach>
-
                 </select>
-
                 </td>
             </tr>
             </tbody>
@@ -57,8 +55,8 @@
             <tr>
                 <td><input type="submit" value="Отправить"></td>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <td><input type="button" value="Отмена" onclick="window.history.back()"></td>
-
+                <td><input type="button" value="Отмена"
+                           onclick='location.href="/employee/listEmployee?departmentId=${currentDepartId}"'></td>
         </table>
     </div>
 </form>
