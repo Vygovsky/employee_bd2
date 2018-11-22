@@ -8,11 +8,11 @@
     <style>.error {
         color: red;
     }
+
     .success {
         color: green;
     }</style>
 </head>
-
 
 
 <body>
@@ -22,20 +22,22 @@
 </div>
 <form method="POST" action="${pageContext.request.contextPath}/employee/create">
     <div class="form-style-6">
-           <table>
+        <table>
             <tr>
                 <td>Имя сотрудника :</td>
                 <td><input type="text" name="name" required value="${name}"><br></td>
-                <span style="color: red">${errorMassage}</span>
+                <span style="color: red">${errorNameMassage}<br/></span>
             </tr>
             <tr>
                 <td> Электронная почта :</td>
                 <td><input type="text" name="email" required value="${email}"></td>
-                <br>
+                <span style="color: red">${errorEmailMassage}<br/></span>
+
             </tr>
             <tr>
                 <td>Дата рождения :</td>
                 <td><input type="date" name="date" required value="${date}"></td>
+                <span style="color: red">${errorBdMassage}<br/></span>
                 <br>
             </tr>
             <tr>
@@ -55,8 +57,9 @@
                 <td><input type="submit" value="Отправить"></td>
                 <span class="success">${message.success}</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <td><input type="button" value="Отмена" onclick='location.href="/employee/listEmployee?departmentId=${currentDepartId}"'></td>
-               <%-- <td><input type="button" value="Отмена" onclick="window.history.back()"></td>--%>
+                <td><input type="button" value="Отмена"
+                           onclick='location.href="/employee/listEmployee?departmentId=${currentDepartId}"'></td>
+                <%-- <td><input type="button" value="Отмена" onclick="window.history.back()"></td>--%>
             </tr>
         </table>
     </div>

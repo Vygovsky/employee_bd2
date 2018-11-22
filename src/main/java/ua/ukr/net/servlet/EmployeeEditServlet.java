@@ -58,38 +58,44 @@ public class EmployeeEditServlet extends HttpServlet {
 
         Employee byEmail = employeeDao.findByEmail(employee.getEmail());
 
-        if (validate.validateName(employee.getName())) {
+        boolean isNameValid = validate.isNameValid(employee.getName());
+        boolean isEmailValid = validate.isEmailValid(employee.getEmail());
+        boolean isBirthdayValid = validate.isBirthdayValid(employee.getBirthday());
+        boolean isEmailValidAlreadyExisted = validate.isEmailAlreadyExisted(employee.getEmail());
+        boolean isAllFieldsValid = isNameValid && !isEmailValidAlreadyExisted && isEmailValid && isBirthdayValid;
+
+        if (!isNameValid) {
             errorMassageByName(req, resp);
+        }
 
-        } else if (!validate.validateEmail(employee.getEmail()) || employee.getEmail().equals(byEmail.getEmail())) {
+        if (!isEmailValid || isEmailValidAlreadyExisted) {
             errorMassageByEmail(req, resp);
+        }
 
-        } else if (validate.validateBirthday(employee.getBirthday())) {
+        if (!isBirthdayValid) {
             errorMassageByBirthday(req, resp);
+        }
 
-        } else {
+        if (isAllFieldsValid) {
             employeeDao.update(employee);
             req.setAttribute("employee", employee);
             resp.sendRedirect("/employee/listEmployee?departmentId=" + departmentId);
+        } else {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
+            rd.include(req, resp);
         }
     }
 
     private void errorMassageByBirthday(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("errorMassage", "Date incorrect.");
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
-        rd.include(req, resp);
+        req.setAttribute("errorBdMassage", "Date incorrect.");
     }
 
     private void errorMassageByEmail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("errorMassage", "Email incorrect or email address already exists.");
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
-        rd.include(req, resp);
+        req.setAttribute("errorEmailMassage", "Email incorrect or email address already exists.");
     }
 
     private void errorMassageByName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("errorMassage", "Name can't be number or less two litter.");
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
-        rd.include(req, resp);
+        req.setAttribute("errorNameMassage", "Name can't be number or less two litter.");
     }
 }
 

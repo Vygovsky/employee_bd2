@@ -18,27 +18,26 @@
         <table>
             <tr>
                 <td>Номер сотрудника :</td>
-                <td><input type="hidden" name="id"
-                           value="${employee.id} "/></td>
+                <td><input type="hidden" name="id" value="${employee.id} "/></td>
             </tr>
             <br/>
             <tr>
                 <td> Имя сотрудника :</td>
                 <td><input type="text" name="name"
                            value="<c:out value="${employee.name}" />"/></td>
-                <br/>
+                <span style="color: red">${errorNameMassage}<br/></span>
             </tr>
             <tr>
                 <td> Почта :</td>
                 <td><input type="text" name="email"
                            value="<c:out value="${employee.email}" />"/></td>
-                <br/>
+                 <span style="color: red"><br/>${errorEmailMassage}<br/></span>
             </tr>
             <tr>
                 <td>День рождения :</td>
                 <td><input type="date" name="date" value="${employee.birthday}"></td>
+                <span style="color: red">${errorBdMassage}</span>
             </tr>
-            <br/>
             <tbody>
             <tr>
                 <td>Департамент :</td>
