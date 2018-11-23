@@ -25,18 +25,18 @@
         <table>
             <tr>
                 <td>Имя сотрудника :</td>
-                <td><input type="text" name="name" required value="${name}"><br></td>
+                <td><input type="text" name="name" required value="${employee.name}"><br></td>
                 <span style="color: red">${errorNameMassage}<br/></span>
             </tr>
             <tr>
                 <td> Электронная почта :</td>
-                <td><input type="text" name="email" required value="${email}"></td>
+                <td><input type="text" name="email" required value="${employee.email}"></td>
                 <span style="color: red">${errorEmailMassage}<br/></span>
 
             </tr>
             <tr>
                 <td>Дата рождения :</td>
-                <td><input type="date" name="date" required value="${date}"></td>
+                <td><input type="date" name="date" required value="${employee.birthday}"></td>
                 <span style="color: red">${errorBdMassage}<br/></span>
                 <br>
             </tr>
