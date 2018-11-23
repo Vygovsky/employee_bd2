@@ -31,7 +31,7 @@
                 <td> Почта :</td>
                 <td><input type="text" name="email"
                            value="<c:out value="${employee.email}" />"/></td>
-                 <span style="color: red"><br/>${errorEmailMassage}<br/></span>
+                 <span style="color: red">${errorEmailMassage}<br/></span>
             </tr>
             <tr>
                 <td>День рождения :</td>

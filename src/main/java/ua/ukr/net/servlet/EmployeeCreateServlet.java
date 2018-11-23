@@ -25,7 +25,6 @@ public class EmployeeCreateServlet extends HttpServlet {
     private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
     private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -79,6 +78,7 @@ public class EmployeeCreateServlet extends HttpServlet {
             req.setAttribute("employee", employee);
             resp.sendRedirect("/employee/listEmployee?departmentId=" + departId);
         } else {
+            req.setAttribute("employee", employee);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
             rd.include(req, resp);
         }
@@ -101,8 +101,6 @@ public class EmployeeCreateServlet extends HttpServlet {
         req.setAttribute("departments", departments);
         req.setAttribute("currentDepartId", currentDepartId);
     }
-
-
 }
 
 

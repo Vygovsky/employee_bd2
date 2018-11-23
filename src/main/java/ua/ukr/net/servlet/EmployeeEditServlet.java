@@ -42,21 +42,23 @@ public class EmployeeEditServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
 
-        Employee employee = new Employee();
         List<Department> departments = departmentDao.findAll();
         req.setAttribute("departments", departments);
+
         Long currentDepartId = Long.parseLong(req.getParameter("currentDepartId"));
         req.setAttribute("currentDepartId", currentDepartId);
-        String id = req.getParameter("id");
+
         Long departmentId = Long.parseLong(req.getParameter("departments"));
-        employee.setDepartID(departmentId);
-        employee.setId(Long.parseLong(id));
+
+        Employee employee = new Employee();
+
+        Long id = Long.parseLong(req.getParameter("id"));
+        employee.setId(id);
         employee.setName(req.getParameter("name"));
         employee.setEmail(req.getParameter("email"));
         LocalDate date = LocalDate.parse(req.getParameter("date"));
         employee.setBirthday(Date.valueOf(date));
-
-        Employee byEmail = employeeDao.findByEmail(employee.getEmail());
+        employee.setDepartID(departmentId);
 
         boolean isNameValid = validate.isNameValid(employee.getName());
         boolean isEmailValid = validate.isEmailValid(employee.getEmail());
@@ -68,7 +70,7 @@ public class EmployeeEditServlet extends HttpServlet {
             errorMassageByName(req, resp);
         }
 
-        if (!isEmailValid || isEmailValidAlreadyExisted) {
+        if (!isEmailValid) {
             errorMassageByEmail(req, resp);
         }
 
@@ -81,7 +83,8 @@ public class EmployeeEditServlet extends HttpServlet {
             req.setAttribute("employee", employee);
             resp.sendRedirect("/employee/listEmployee?departmentId=" + departmentId);
         } else {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
+            req.setAttribute("employee", employee);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_update.jsp");
             rd.include(req, resp);
         }
     }
