@@ -1,23 +1,13 @@
 package ua.ukr.net.servlet;
 
 
-import ua.ukr.net.dao.JdbcDepartmentDao;
-import ua.ukr.net.dao.JdbcEmployeeDao;
-import ua.ukr.net.model.Department;
-
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @WebServlet("/departments")
 public class DepartServlet extends HttpServlet {
 
-    private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
+  /*  private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
     private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
 
     @Override
@@ -83,5 +73,5 @@ public class DepartServlet extends HttpServlet {
             departmentDao.update(department);
         }
         resp.sendRedirect("/departments");
-    }
+    }*/
 }
