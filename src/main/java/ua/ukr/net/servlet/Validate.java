@@ -10,7 +10,8 @@ public class Validate {
     private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
 
     public boolean isNameValid(final String name) {
-        return name.length() >= 3 && !name.equals("\\d+");
+        return name.length() >= 3 && name.matches("[\\D]+");
+      /*  return name.length()>3&& !name.matches("[a-zA-zа-яА-Я]+");*/
     }
 
     public boolean isEmailValid(final String email) {

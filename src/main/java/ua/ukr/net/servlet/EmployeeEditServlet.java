@@ -64,7 +64,7 @@ public class EmployeeEditServlet extends HttpServlet {
         boolean isEmailValid = validate.isEmailValid(employee.getEmail());
         boolean isBirthdayValid = validate.isBirthdayValid(employee.getBirthday());
         boolean isEmailValidAlreadyExisted = validate.isEmailAlreadyExisted(employee.getEmail());
-        boolean isAllFieldsValid = isNameValid && !isEmailValidAlreadyExisted && isEmailValid && isBirthdayValid;
+        boolean isAllFieldsValid = isNameValid && isEmailValidAlreadyExisted && isEmailValid && isBirthdayValid;
 
         if (!isNameValid) {
             errorMassageByName(req, resp);
