@@ -1,6 +1,8 @@
 package ua.ukr.net.servlet;
 
 
+import org.h2.util.StringUtils;
+import ua.ukr.net.Validator;
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
@@ -61,27 +63,50 @@ public class DepartServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
-        Map<String, String> errorMassage = new HashMap<>();
 
+        String name = req.getParameter("name");
         String departId = req.getParameter("id");
-        Department department = new Department();
 
-        department.setName(req.getParameter("name"));
+        Map<String, String> errorMassages = new HashMap<>();
+
+        Department department;
+        if (StringUtils.isNullOrEmpty(departId)){
+            department = new Department();
+        }else {
+            department = departmentDao.findID(Long.valueOf(departId));
+        }
+        department.setName(name);
+
+        Validator.validateDepartment(department, errorMassages);
+
+        if (errorMassages.isEmpty()){
+            department = departmentDao.createOrUpdate(department);
+            //resp.sendRedirect("/departments");
+            req.setAttribute("department", department);
+        }else {
+            req.setAttribute("error", errorMassages);
+        }
+
+
+
+
+
+/*
         if (department.getName().isEmpty() || department.getName() == null) {
             errorMassage.put("name", "Please enter name");
         } else if (!department.getName().matches("\\p{Alnum}+"))
-            errorMassage.put("name", "Please enter alphanumeric characters only");
+            errorMassage.put("name", "Please enter alphanumeric characters only");*/
 
-        if (departId == null || departId.isEmpty()) {
+        /*if (departId == null || departId.isEmpty()) {
            req.setAttribute("error", errorMassage);
             departmentDao.create(department);
         } else {
             department.setId(Long.parseLong(departId));
             departmentDao.update(department);
         }
-        resp.sendRedirect("/departments");
+        resp.sendRedirect("/departments");*/
     }
 }

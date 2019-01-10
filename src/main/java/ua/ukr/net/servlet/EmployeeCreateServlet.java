@@ -1,5 +1,6 @@
 package ua.ukr.net.servlet;
 
+import ua.ukr.net.Validator;
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
@@ -43,7 +44,7 @@ public class EmployeeCreateServlet extends HttpServlet {
         resp.setContentType("text/html; charset=utf-8");
 
         Employee employee = new Employee();
-        Validate validate = new Validate();
+        Validator validator = new Validator();
 
         employee.setName(req.getParameter("name"));
         employee.setEmail(req.getParameter("email"));
@@ -54,10 +55,10 @@ public class EmployeeCreateServlet extends HttpServlet {
 
         pushListOfDepartmentsWithCurrentDepartmentIdAsRequestParameters(req, departId);
 
-        boolean isNameValid = validate.isNameValid(employee.getName());
-        boolean isEmailValid = validate.isEmailValid(employee.getEmail());
-        boolean isBirthdayValid = validate.isBirthdayValid(employee.getBirthday());
-        boolean isEmailValidAlreadyExisted = validate.isEmailAlreadyExisted(employee.getEmail());
+        boolean isNameValid = validator.isNameValid(employee.getName());
+        boolean isEmailValid = validator.isEmailValid(employee.getEmail());
+        boolean isBirthdayValid = validator.isBirthdayValid(employee.getBirthday());
+        boolean isEmailValidAlreadyExisted = validator.isEmailAlreadyExisted(employee.getEmail());
         boolean isAllFieldsValid = isNameValid && !isEmailValidAlreadyExisted && isEmailValid && isBirthdayValid;
 
         if (!isNameValid) {

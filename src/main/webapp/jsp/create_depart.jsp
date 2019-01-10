@@ -1,3 +1,4 @@
+<%--@elvariable id="depart" type="ua.ukr.net.model.Department"--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,8 +12,18 @@
     <h1>Создать департамент</h1>
 </div>
 
+<%--
+<c:if test="${depart.id != null}">
+    <c:set var="url" value="/departments?action=edit&id=${depart.id}"/>
+</c:if>
 
-<form method="POST" action="/departments?action=edit&id=${depart.id}">
+<c:if test="${depart.id == null}">
+    <c:set var="url" value="/departments?action=edit"/>
+</c:if>
+--%>
+
+
+<form method="POST" action="${pageContext.request.contextPath}/departments?action=edit&id=${depart.id}">
 
     <div class="form-style-6">
         <table>

@@ -1,16 +1,18 @@
-package ua.ukr.net.servlet;
+package ua.ukr.net;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import ua.ukr.net.dao.JdbcEmployeeDao;
+import ua.ukr.net.model.Department;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
-public class Validate {
+public class Validator {
     private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
 
-    public boolean isNameValid(final String name) {
-        return name.length() >= 3 && !name.equals("\\d+");
+    public static boolean isNameValid(final String name) {
+        return name.length() >= 3 && name.matches("[\\D]+");
     }
 
     public boolean isEmailValid(final String email) {
@@ -27,5 +29,12 @@ public class Validate {
             return false;
         }
         return true;
+    }
+
+    public static void validateDepartment(Department department, Map<String, String> errorMassages) {
+        if(!isNameValid(department.getName())){
+            errorMassages.put("name", "Please enter name");
+        }
+
     }
 }

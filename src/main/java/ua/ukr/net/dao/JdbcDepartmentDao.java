@@ -23,25 +23,48 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
             "GROUP BY depart_id";
 
     @Override
-    public void create(Department department) {
-        try {
-            PreparedStatement preparedStatement = createConnection().prepareStatement(INSERT_DEPART);
-            preparedStatement.setString(1, department.getName());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public Department createOrUpdate(Department department) {
+        Long id;
+        if (department.getId() == null) {
+            id = create(department);
+        } else {
+            id = update(department);
         }
+        return findID(id);
     }
 
     @Override
-    public void update(Department department) {
+    public Long create(Department department) {
+        try {
+            PreparedStatement preparedStatement = createConnection().prepareStatement(INSERT_DEPART);
+            preparedStatement.setString(1, department.getName());
+            preparedStatement.execute();
+            return parseResponse(preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Long parseResponse(PreparedStatement stmtInsert) throws SQLException {
+        ResultSet rs = stmtInsert.getGeneratedKeys();
+        if (rs.next()) {
+            return rs.getLong(1);
+        }
+        return null;
+    }
+
+    @Override
+    public Long update(Department department) {
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(UPDATE_DEPART);
             preparedStatement.setString(1, department.getName());
             preparedStatement.setLong(2, department.getId());
             preparedStatement.executeUpdate();
+            return department.getId();
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
     }
 

@@ -1,5 +1,6 @@
 package ua.ukr.net.servlet;
 
+import ua.ukr.net.Validator;
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
@@ -21,7 +22,7 @@ public class EmployeeEditServlet extends HttpServlet {
 
     private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
     private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
-    Validate validate = new Validate();
+    Validator validator = new Validator();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,10 +61,10 @@ public class EmployeeEditServlet extends HttpServlet {
         employee.setBirthday(Date.valueOf(date));
         employee.setDepartID(departmentId);
 
-        boolean isNameValid = validate.isNameValid(employee.getName());
-        boolean isEmailValid = validate.isEmailValid(employee.getEmail());
-        boolean isBirthdayValid = validate.isBirthdayValid(employee.getBirthday());
-        boolean isEmailValidAlreadyExisted = validate.isEmailAlreadyExisted(employee.getEmail());
+        boolean isNameValid = validator.isNameValid(employee.getName());
+        boolean isEmailValid = validator.isEmailValid(employee.getEmail());
+        boolean isBirthdayValid = validator.isBirthdayValid(employee.getBirthday());
+        boolean isEmailValidAlreadyExisted = validator.isEmailAlreadyExisted(employee.getEmail());
         boolean isAllFieldsValid = isNameValid && !isEmailValidAlreadyExisted && isEmailValid && isBirthdayValid;
 
         if (!isNameValid) {
