@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface EmployeeDao {
 
-    void create(Employee employee);
+    Employee createOrUpdate(Employee employee);
 
-    void update(Employee employee);
+    Long create(Employee employee);
+
+    Long update(Employee employee);
 
     void remove(Long id);
 

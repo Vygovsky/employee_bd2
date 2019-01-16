@@ -1,6 +1,7 @@
+/*
 package ua.ukr.net.servlet;
 
-import ua.ukr.net.Validator;
+import ua.ukr.net.validator.Validator;
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
@@ -27,7 +28,8 @@ public class EmployeeEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Long employeeId = Long.parseLong(req.getParameter("id"));
+      */
+/*  Long employeeId = Long.parseLong(req.getParameter("id"));
         Long currentDepartId = Long.parseLong(req.getParameter("currentDepartId"));
         Employee employee = employeeDao.findById(employeeId);
         List<Department> departments = departmentDao.findAll();
@@ -35,7 +37,8 @@ public class EmployeeEditServlet extends HttpServlet {
         req.setAttribute("employee", employee);
         req.setAttribute("departments", departments);
         req.setAttribute("currentDepartId", currentDepartId);
-        req.getServletContext().getRequestDispatcher("/jsp/employee_update.jsp").forward(req, resp);
+        req.getServletContext().getRequestDispatcher("/jsp/employee_update.jsp").forward(req, resp);*//*
+
     }
 
     @Override
@@ -103,3 +106,4 @@ public class EmployeeEditServlet extends HttpServlet {
     }
 }
 
+*/

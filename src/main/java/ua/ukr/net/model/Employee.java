@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import java.sql.Date;
 
 public class Employee {
-    private long id;
+    private Long id;
     private String name;
     private String email;
     private Date birthday;
@@ -19,14 +19,6 @@ public class Employee {
         this.name = name;
         this.email = email;
         this.birthday = birthday;
-    }
-
-    public Employee(long id, String name, String email, Date birthday, Long departID) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.birthday = birthday;
-        this.departID = departID;
     }
 
     public Employee(Long id, String name, String email, Date birthday, Long departID) {
@@ -52,7 +44,7 @@ public class Employee {
         this.department = department;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -99,7 +91,7 @@ public class Employee {
 
         Employee employee = (Employee) o;
 
-        if (id != employee.id) return false;
+        if (!id.equals(employee.id)) return false;
         if (name != null ? !name.equals(employee.name) : employee.name != null) return false;
         if (email != null ? !email.equals(employee.email) : employee.email != null) return false;
         if (birthday != null ? !birthday.equals(employee.birthday) : employee.birthday != null) return false;

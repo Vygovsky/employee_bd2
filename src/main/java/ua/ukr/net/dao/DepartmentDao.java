@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface DepartmentDao {
+
     Department createOrUpdate(Department department);
 
     Long create(Department department);

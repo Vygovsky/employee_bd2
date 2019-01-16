@@ -2,7 +2,7 @@ package ua.ukr.net.servlet;
 
 
 import org.h2.util.StringUtils;
-import ua.ukr.net.Validator;
+import ua.ukr.net.validator.Validator;
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
@@ -48,7 +48,6 @@ public class DepartServlet extends HttpServlet {
         listOfDepartments(req, resp);
     }
 
-
     private void updateDepartForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long departmentId = Long.parseLong(req.getParameter("id"));
         Department department = departmentDao.findID(departmentId);
@@ -73,26 +72,23 @@ public class DepartServlet extends HttpServlet {
         Map<String, String> errorMassages = new HashMap<>();
 
         Department department;
-        if (StringUtils.isNullOrEmpty(departId)){
+        if (StringUtils.isNullOrEmpty(departId)) {
             department = new Department();
-        }else {
-            department = departmentDao.findID(Long.valueOf(departId));
+        } else {
+            department = departmentDao.findID(Long.parseLong(departId));
         }
         department.setName(name);
 
         Validator.validateDepartment(department, errorMassages);
 
-        if (errorMassages.isEmpty()){
+        if (errorMassages.isEmpty()) {
             department = departmentDao.createOrUpdate(department);
-            //resp.sendRedirect("/departments");
             req.setAttribute("department", department);
-        }else {
+            resp.sendRedirect("/departments");
+        } else {
             req.setAttribute("error", errorMassages);
+            resp.sendRedirect("/departments");
         }
-
-
-
-
 
 /*
         if (department.getName().isEmpty() || department.getName() == null) {

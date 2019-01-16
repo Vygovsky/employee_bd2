@@ -102,11 +102,11 @@
             <td>${employee.birthday}</td>
             <td>${employee.department.name}</td>
 
-            <form action="/editEmployee" method="post">
-                <td><a href="/editEmployee?id=${employee.id}&currentDepartId=${departmentId}">Edit</a></td>
+            <form action="/employee/create" method="post">
+                <td><a href="/employee/create?action=edit&id=${employee.id}&currentDepartId=${departmentId}">Edit</a></td>
 
             </form>
-            <td><a href="/deleteEmployee?id=${employee.id}&departmentId=${departmentId}">Delete</a></td>
+            <td><a href="/employee/create?action=delete&id=${employee.id}&departmentId=${departmentId}">Delete</a></td>
 
         </tr>
     </c:forEach>

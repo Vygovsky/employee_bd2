@@ -1,4 +1,4 @@
-<%--@elvariable id="depart" type="ua.ukr.net.model.Department"--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -23,7 +23,7 @@
 --%>
 
 
-<form method="POST" action="${pageContext.request.contextPath}/departments?action=edit&id=${depart.id}">
+<form method="POST" action="/departments?action=edit&id=${depart.id}">
 
     <div class="form-style-6">
         <table>
@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <td>Имя департамента :</td>
-                <td><input type="text" name="name" required value="${depart.name}"/></td>
+                <td><input type="text" name="name" value="<c:out value="${depart.name}"/><%--required value="${department.name}--%>"/></td>
                 <span style="color:red">${error.name}</span>
 
                 <br/>

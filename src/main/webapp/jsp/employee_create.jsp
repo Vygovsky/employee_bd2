@@ -58,7 +58,7 @@
                 <span class="success">${message.success}</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <td><input type="button" value="Отмена"
-                           onclick='location.href="/employee/listEmployee?departmentId=${currentDepartId}"'></td>
+                           onclick='location.href="/employee/create?departmentId=${currentDepartId}"'></td>
                 <%-- <td><input type="button" value="Отмена" onclick="window.history.back()"></td>--%>
             </tr>
         </table>

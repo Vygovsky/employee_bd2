@@ -21,8 +21,36 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
     private final String INSERT_EMPL = "INSERT INTO employee (first_name, email, birthday, department_id) VALUES(?,?,?,?)";
     private final String DELETE_EMPL_DEPART_ID = "DELETE FROM employee WHERE department_id = ?";
 
+
     @Override
-    public void update(Employee employee) {
+    public Employee createOrUpdate(Employee employee) {
+        Long id;
+        if (employee.getId() == null) {
+            id = create(employee);
+        } else {
+            id = update(employee);
+        }
+        return findById(id);
+    }
+
+    @Override
+    public Long create(Employee employee) {
+        try {
+            PreparedStatement preparedStatement = createConnection().prepareStatement(INSERT_EMPL, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, employee.getName());
+            preparedStatement.setString(2, employee.getEmail());
+            preparedStatement.setDate(3, employee.getBirthday());
+            preparedStatement.setLong(4, employee.getDepartID());
+            preparedStatement.execute();
+            return parseResponse2(preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Long update(Employee employee) {
         try {
             PreparedStatement preparedStatement = createConnection().prepareStatement(UPDATE_EMPLOYEE);
             preparedStatement.setString(1, employee.getName());
@@ -31,25 +59,27 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
             preparedStatement.setLong(4, employee.getDepartID());
             preparedStatement.setLong(5, employee.getId());
             preparedStatement.executeUpdate();
-
+            return employee.getId();
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
-    @Override
-    public void create(Employee employee) {
-        try {
-            PreparedStatement preparedStatement = createConnection().prepareStatement(INSERT_EMPL);
-            preparedStatement.setString(1, employee.getName());
-            preparedStatement.setString(2, employee.getEmail());
-            preparedStatement.setDate(3, employee.getBirthday());
-            preparedStatement.setLong(4, employee.getDepartID());
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+   /* private Long parseResponse(PreparedStatement preparedStatement) throws SQLException {
+        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            return generatedKeys.getLong(1);
         }
+        return null;
+    }*/
+
+    private Long parseResponse2(PreparedStatement stmtInsert) throws SQLException {
+        ResultSet rs = stmtInsert.getGeneratedKeys();
+        if (rs.next()) {
+            return rs.getLong(1);
+        }
+        return null;
     }
 
     public void remove(Long id) {

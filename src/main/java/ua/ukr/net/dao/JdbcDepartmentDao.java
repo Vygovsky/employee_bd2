@@ -19,7 +19,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
     private final String DELETE_DEPART = "DELETE FROM department WHERE id=?";
     private final String INSERT_DEPART = "INSERT INTO department (name) VALUES(?)";
     private final String COUNT_EMPL_IN_DEPART = "SELECT depart_id,name, COUNT(e_id) empl_count\n" +
-            "FROM (SELECT  e.id e_id, d.id depart_id, d.name FROM department d LEFT JOIN employee e on d.id = e.department_id)\n" +
+            "FROM (SELECT  e.id e_id, d.id depart_id, d.name FROM department d LEFT JOIN employee e on d.id = e.department_id) as n\n" +
             "GROUP BY depart_id";
 
     @Override
@@ -36,7 +36,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
     @Override
     public Long create(Department department) {
         try {
-            PreparedStatement preparedStatement = createConnection().prepareStatement(INSERT_DEPART);
+            PreparedStatement preparedStatement = createConnection().prepareStatement(INSERT_DEPART, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, department.getName());
             preparedStatement.execute();
             return parseResponse(preparedStatement);

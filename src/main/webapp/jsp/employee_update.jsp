@@ -10,7 +10,7 @@
 
 
 <body>
-<form method="post" action="/editEmployee?id=${employee.id}&currentDepartId=${currentDepartId}">
+<form method="post" action="/employee/create?id=${employee.id}&currentDepartId=${currentDepartId}">
     <div class="form-style-6">
         <div align="center">
             <h2>Изменить данные сотрудника </h2>
@@ -18,7 +18,7 @@
         <table>
             <tr>
                 <td>Номер сотрудника :</td>
-                <td><input type="hidden" name="id" value="${employee.id} "/></td>
+                <td><input type="text" value="${employee.id}" readonly="readonly"/></td>
             </tr>
             <br/>
             <tr>
@@ -41,7 +41,7 @@
             <tbody>
             <tr>
                 <td>Департамент :</td>
-                <td><select name="departments">
+                <td><select name="organizations">
                     <c:forEach var="depart" items="${departments}">
                         <option value="${depart.id}"
                             ${depart.id == currentDepartId ? 'selected="selected"' : null}>${depart.name}</option>
@@ -55,7 +55,7 @@
                 <td><input type="submit" value="Отправить"></td>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <td><input type="button" value="Отмена"
-                           onclick='location.href="/employee/listEmployee?departmentId=${currentDepartId}"'></td>
+                           onclick='location.href="/employee/create?departmentId=${currentDepartId}"'></td>
         </table>
     </div>
 </form>
