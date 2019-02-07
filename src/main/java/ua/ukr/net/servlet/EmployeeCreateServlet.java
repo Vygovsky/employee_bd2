@@ -1,11 +1,11 @@
 package ua.ukr.net.servlet;
 
 import org.h2.util.StringUtils;
-import ua.ukr.net.validator.Validator;
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
 import ua.ukr.net.model.Employee;
+import ua.ukr.net.validator.Validator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,14 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import static java.time.LocalDate.*;
+import static java.time.LocalDate.parse;
 
 @WebServlet("/employee/create")
 public class EmployeeCreateServlet extends HttpServlet {
@@ -94,13 +94,15 @@ public class EmployeeCreateServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
 
+        HttpSession session = req.getSession();
+        session.removeAttribute("errors");
+        session.removeAttribute("employee");
         String employeeId = req.getParameter("id");
 
 
         Map<String, String> errorMassages = new HashMap<>();
 
         Employee employee;
-        Validator validator = new Validator();
 
         if (StringUtils.isNullOrEmpty(employeeId)) {
             employee = new Employee();
@@ -113,16 +115,22 @@ public class EmployeeCreateServlet extends HttpServlet {
         employee.setBirthday(java.sql.Date.valueOf(birthday));
         Long departId = Long.parseLong(req.getParameter("organizations"));
         employee.setDepartID(departId);
-    //    pushListOfDepartmentsWithCurrentDepartmentIdAsRequestParameters(req, departId);
+
+        Validator.validatorEmployee(employee, errorMassages);
+
         if (errorMassages.isEmpty()) {
             employee = employeeDao.createOrUpdate(employee);
             req.setAttribute("departId", departId);
             req.setAttribute("employee", employee);
             resp.sendRedirect("/employee/create?action=list&departmentId=" + departId);
         } else {
+            session.setAttribute("errors", errorMassages);
             req.setAttribute("employee", employee);
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
-            rd.include(req, resp);
+            req.setAttribute("departId", departId);
+            //  RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
+            //rd.include(req, resp);
+            resp.sendRedirect("/employee/create?action=add&currentDepartId=" + departId);
+
         }
     }
 

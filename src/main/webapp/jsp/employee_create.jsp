@@ -25,20 +25,28 @@
         <table>
             <tr>
                 <td>Имя сотрудника :</td>
-                <td><input type="text" name="name" required value="${employee.name}"><br></td>
-                <span style="color: red">${errorNameMassage}<br/></span>
+                <td><input type="text" name="name" required value="<c:out value="${sessionScope.employee.name}"/>${employee.name}"/><br></td>
+                <c:if test="${not empty errors}">
+                    <span style="color:red"><c:out value="${sessionScope.errors[\"errorNameMessage\"]}"/></span>
+                </c:if>
+                <br/>
             </tr>
             <tr>
                 <td> Электронная почта :</td>
-                <td><input type="text" name="email" required value="${employee.email}"></td>
-                <span style="color: red">${errorEmailMassage}<br/></span>
+                <td><input type="text" name="email" required value="${sessionScope.employee.email}">${employee.email}</td>
+                <c:if test="${not empty errors}">
+                    <span style="color:red"><c:out value="${sessionScope.errors[\"errorEmailMessage\"]}"/></span>
+                </c:if>
+                <br/>
 
             </tr>
             <tr>
                 <td>Дата рождения :</td>
-                <td><input type="date" name="date" required value="${employee.birthday}"></td>
-                <span style="color: red">${errorBdMassage}<br/></span>
-                <br>
+                <td><input type="date" name="date" required value="${sessionScope.employee.birthday}">${employee.birthday}</td>
+                <c:if test="${not empty errors}">
+                    <span style="color:red"><c:out value="${sessionScope.errors[\"errorBdMessage\"]}"/></span>
+                </c:if>
+                <br/>
             </tr>
             <tr>
                 <td>Департамент :</td>
@@ -59,7 +67,6 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <td><input type="button" value="Отмена"
                            onclick='location.href="/employee/create?departmentId=${currentDepartId}"'></td>
-                <%-- <td><input type="button" value="Отмена" onclick="window.history.back()"></td>--%>
             </tr>
         </table>
     </div>

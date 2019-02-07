@@ -66,14 +66,6 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
         }
     }
 
-   /* private Long parseResponse(PreparedStatement preparedStatement) throws SQLException {
-        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-        if (generatedKeys.next()) {
-            return generatedKeys.getLong(1);
-        }
-        return null;
-    }*/
-
     private Long parseResponse2(PreparedStatement stmtInsert) throws SQLException {
         ResultSet rs = stmtInsert.getGeneratedKeys();
         if (rs.next()) {

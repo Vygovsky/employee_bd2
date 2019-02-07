@@ -24,19 +24,30 @@
             <tr>
                 <td> Имя сотрудника :</td>
                 <td><input type="text" name="name"
-                           value="<c:out value="${employee.name}" />"/></td>
-                <span style="color: red">${errorNameMassage}<br/></span>
+                           value="<c:out value="${sessionScope.employee.name}"/>${employee.name}"/></td>
+                <c:if test="${not empty errors}">
+                    <span style="color:red"><c:out value="${sessionScope.errors[\"errorNameMessage\"]}"/></span>
+                </c:if>
+                <br/>
+
             </tr>
             <tr>
                 <td> Почта :</td>
                 <td><input type="text" name="email"
-                           value="<c:out value="${employee.email}" />"/></td>
-                 <span style="color: red">${errorEmailMassage}<br/></span>
+                           value="<c:out value="${sessionScope.employee.email}" />${employee.email}"/></td>
+                <c:if test="${not empty errors}">
+                    <span style="color:red"><c:out value="${sessionScope.errors[\"errorEmailMessage\"]}"/></span>
+                </c:if>
+                <br/>
             </tr>
             <tr>
                 <td>День рождения :</td>
-                <td><input type="date" name="date" value="${employee.birthday}"></td>
-                <span style="color: red">${errorBdMassage}</span>
+                <td><input type="date" name="date"
+                           value="<c:out value="${sessionScope.employee.email}" />${employee.birthday}"/></td>
+                <c:if test="${not empty errors}">
+                    <span style="color:red"><c:out value="${sessionScope.errors[\"errorBdMessage\"]}"/></span>
+                </c:if>
+                <br/>
             </tr>
             <tbody>
             <tr>

@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,14 +63,18 @@ public class DepartServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
+
+        HttpSession session = req.getSession();
+       /* session.removeAttribute("errors");
+        session.removeAttribute("department");*/
 
         String name = req.getParameter("name");
         String departId = req.getParameter("id");
 
-        Map<String, String> errorMassages = new HashMap<>();
+        Map<String, String> errorMessages = new HashMap<>();
 
         Department department;
         if (StringUtils.isNullOrEmpty(departId)) {
@@ -77,32 +82,20 @@ public class DepartServlet extends HttpServlet {
         } else {
             department = departmentDao.findID(Long.parseLong(departId));
         }
-        department.setName(name);
+        if (!Validator.isDepartAlreadyExisted(departmentDao.findByName(name), name, errorMessages)) {
 
-        Validator.validateDepartment(department, errorMassages);
+            department.setName(name);
+            Validator.validateDepartment(department, errorMessages);
+        }
 
-        if (errorMassages.isEmpty()) {
+        if (errorMessages.isEmpty()) {
             department = departmentDao.createOrUpdate(department);
             req.setAttribute("department", department);
             resp.sendRedirect("/departments");
         } else {
-            req.setAttribute("error", errorMassages);
-            resp.sendRedirect("/departments");
+            session.setAttribute("errors", errorMessages);
+            req.setAttribute("department", department);
+            resp.sendRedirect("/departments?action=add");
         }
-
-/*
-        if (department.getName().isEmpty() || department.getName() == null) {
-            errorMassage.put("name", "Please enter name");
-        } else if (!department.getName().matches("\\p{Alnum}+"))
-            errorMassage.put("name", "Please enter alphanumeric characters only");*/
-
-        /*if (departId == null || departId.isEmpty()) {
-           req.setAttribute("error", errorMassage);
-            departmentDao.create(department);
-        } else {
-            department.setId(Long.parseLong(departId));
-            departmentDao.update(department);
-        }
-        resp.sendRedirect("/departments");*/
     }
 }

@@ -6,7 +6,14 @@
 <head>
     <title>Create depart</title>
     <link href="<c:url value="/css/styles.css"/>" rel="stylesheet" type="text/css">
+    <style>.error {
+        color: red;
+    }
 
+    .success {
+        color: green;
+    }</style>
+</head>
 <body>
 <div align="center">
     <h1>Создать департамент</h1>
@@ -33,9 +40,10 @@
             </tr>
             <tr>
                 <td>Имя департамента :</td>
-                <td><input type="text" name="name" value="<c:out value="${depart.name}"/><%--required value="${department.name}--%>"/></td>
-                <span style="color:red">${error.name}</span>
-
+                <td><input type="text" name="name" value="<c:out value="${sessionScope.depart.name}"/> ${depart.name}"/></td>
+                <c:if test="${not empty errors}">
+                    <span style="color:red"><c:out value="${sessionScope.errors[\"departNameError\"]}"/></span>
+                </c:if>
                 <br/>
             </tr>
             <tr>
