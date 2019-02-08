@@ -22,4 +22,6 @@ public interface DepartmentDao {
     Department findByName(String nameDepartment);
 
     Map<Department, Long> getCountOfEmployeesByDepartments();
+
+    String isDepartAlreadyExisted(String s);
 }

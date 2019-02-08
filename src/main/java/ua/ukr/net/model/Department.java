@@ -43,7 +43,7 @@ public class Department {
 
         Department that = (Department) o;
 
-        if (id != that.id) return false;
+        if (!id.equals(that.id)) return false;
         return name != null ? name.equals(that.name) : that.name == null;
     }
 

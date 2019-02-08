@@ -21,10 +21,13 @@ public class Validator {
         return name.length() < 3 || !name.matches("[\\D]+");
     }
 
-    public static boolean isDepartAlreadyExisted(Department department, String name, Map<String, String> errorMessages) {
-        if (Objects.nonNull(department) && department.getId() != 0L ) {
-            errorMessages.put("departNameError", "Depart exist");
+    public boolean isExist(Department department, String nameDepart) {
+        return departmentDao.isDepartAlreadyExisted(nameDepart).equals(department.getName());
+    }
 
+    public static boolean isDepartAlreadyExisted(Department department, Map<String, String> errorMessages) {
+        if (Objects.nonNull(department) && department.getId() != 0L) {
+            errorMessages.put("departNameError", "Depart exist");
             return true;
         }
         return false;

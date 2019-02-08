@@ -21,6 +21,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
     private final String COUNT_EMPL_IN_DEPART = "SELECT depart_id,name, COUNT(e_id) empl_count\n" +
             "FROM (SELECT  e.id e_id, d.id depart_id, d.name FROM department d LEFT JOIN employee e on d.id = e.department_id) as n\n" +
             "GROUP BY depart_id";
+    private final String IS_EXIST = "SELECT name from DEPARTMENT";
 
     @Override
     public Department createOrUpdate(Department department) {
@@ -128,7 +129,6 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return department;
     }
 
@@ -147,6 +147,26 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
             e.printStackTrace();
         }
         return map;
+    }
+
+    @Override
+    public String isDepartAlreadyExisted(String nameS) {
+        String name = "";
+        try {
+            Statement statement = createConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(IS_EXIST);
+            while (resultSet.next()) {
+                Department department = new Department();
+                department.setName(resultSet.getString("NAME"));
+                if (department.getName().equalsIgnoreCase(nameS)) {
+                    name=department.getName();
+                    return name;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

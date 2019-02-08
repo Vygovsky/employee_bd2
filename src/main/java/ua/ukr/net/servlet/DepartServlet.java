@@ -82,8 +82,8 @@ public class DepartServlet extends HttpServlet {
         } else {
             department = departmentDao.findID(Long.parseLong(departId));
         }
-        if (!Validator.isDepartAlreadyExisted(departmentDao.findByName(name), name, errorMessages)) {
-
+        Validator validator=new Validator();
+        if (validator.isExist(department,name)) {
             department.setName(name);
             Validator.validateDepartment(department, errorMessages);
         }

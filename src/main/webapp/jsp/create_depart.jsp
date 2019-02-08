@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <td>Имя департамента :</td>
-                <td><input type="text" name="name" value="<c:out value="${sessionScope.depart.name}"/> ${depart.name}"/></td>
+                <td><input type="text" name="name" value="<c:out value="${sessionScope.department.name}"/> ${depart.name}"/></td>
                 <c:if test="${not empty errors}">
                     <span style="color:red"><c:out value="${sessionScope.errors[\"departNameError\"]}"/></span>
                 </c:if>
