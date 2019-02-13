@@ -13,25 +13,30 @@ import java.util.Objects;
 
 public class Validator {
 
-    private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
-    private JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
+    private static JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
+    private static JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
 
 
-    private static boolean isNameValidDepartment(final String name) {
-        return name.length() < 3 || !name.matches("[\\D]+");
+    private static boolean isNameValidDepartment(String name) {
+        return name.length() < 3 || !name.matches("[\\D]+"); //тут NPE падает
     }
 
-    public boolean isExist(Department department, String nameDepart) {
-        return departmentDao.isDepartAlreadyExisted(nameDepart).equals(department.getName());
+    public static boolean isExist(String nameDepart, Map<String, String> error) {
+        if (departmentDao.isDepartAlreadyExisted(nameDepart)) {
+            error.put("departNameError", "Depart exist");
+            return true;
+        }
+        return false;
     }
 
-    public static boolean isDepartAlreadyExisted(Department department, Map<String, String> errorMessages) {
+    public static boolean isDepartAlreadyExisted2(Department department, Map<String, String> errorMessages) {
         if (Objects.nonNull(department) && department.getId() != 0L) {
             errorMessages.put("departNameError", "Depart exist");
             return true;
         }
         return false;
     }
+
 
     private static boolean isEmailValid(final String email) {
         return EmailValidator.getInstance().isValid(email);
@@ -70,16 +75,4 @@ public class Validator {
             errorMessages.put("errorBdMessage", "Date incorrect.");
         }
     }
-
-/*    public static void validatorEmployee(Employee employee, Map<String, String> errorMessages) {
-        if (!isNameValid(employee.getName())) {
-            errorMessages.put("name", "Please enter name");
-        }
-        if (isEmailValid(employee.getEmail())) {
-            errorMessages.put("name", "Email incorrect or email address already exists");
-        }
-        if (!isBirthdayValid(employee.getBirthday())){
-            errorMessages.put("name", "Date incorrect.");
-        }
-    }*/
 }

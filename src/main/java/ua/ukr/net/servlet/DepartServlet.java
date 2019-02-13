@@ -2,10 +2,10 @@ package ua.ukr.net.servlet;
 
 
 import org.h2.util.StringUtils;
-import ua.ukr.net.validator.Validator;
 import ua.ukr.net.dao.JdbcDepartmentDao;
 import ua.ukr.net.dao.JdbcEmployeeDao;
 import ua.ukr.net.model.Department;
+import ua.ukr.net.validator.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,29 +63,28 @@ public class DepartServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
 
         HttpSession session = req.getSession();
-       /* session.removeAttribute("errors");
-        session.removeAttribute("department");*/
+        session.removeAttribute("errors");
+        session.removeAttribute("department");
 
-        String name = req.getParameter("name");
+        String name = req.getParameter("name").trim();
         String departId = req.getParameter("id");
 
         Map<String, String> errorMessages = new HashMap<>();
 
         Department department;
         if (StringUtils.isNullOrEmpty(departId)) {
-            department = new Department();
+            department = new Department(name);
         } else {
             department = departmentDao.findID(Long.parseLong(departId));
+
         }
-        Validator validator=new Validator();
-        if (validator.isExist(department,name)) {
-            department.setName(name);
-            Validator.validateDepartment(department, errorMessages);
+        if (!Validator.isExist(name, errorMessages)) {
+            System.out.println("error");
         }
 
         if (errorMessages.isEmpty()) {

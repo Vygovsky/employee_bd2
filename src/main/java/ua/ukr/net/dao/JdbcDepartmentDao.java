@@ -18,10 +18,10 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
     private final String UPDATE_DEPART = "UPDATE department SET name=? WHERE id=?";
     private final String DELETE_DEPART = "DELETE FROM department WHERE id=?";
     private final String INSERT_DEPART = "INSERT INTO department (name) VALUES(?)";
-    private final String COUNT_EMPL_IN_DEPART = "SELECT depart_id,name, COUNT(e_id) empl_count\n" +
+    private final String COUNT_EMPL_IN_DEPART = "SELECT depart_id, name, COUNT(e_id) empl_count\n" +
             "FROM (SELECT  e.id e_id, d.id depart_id, d.name FROM department d LEFT JOIN employee e on d.id = e.department_id) as n\n" +
             "GROUP BY depart_id";
-    private final String IS_EXIST = "SELECT name from DEPARTMENT";
+    private final String IS_EXIST = "SELECT name from DEPARTMENT WHERE DEPARTMENT.name=?";
 
     @Override
     public Department createOrUpdate(Department department) {
@@ -140,7 +140,7 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
             Statement statement = createConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(COUNT_EMPL_IN_DEPART);
             while (resultSet.next()) {
-                department = new Department(resultSet.getLong("DEPART_ID"), resultSet.getString("NAME"));
+                department = new Department(resultSet.getLong("DEPART_ID"), resultSet.getString("NAME").trim());
                 map.put(department, resultSet.getLong("EMPL_COUNT"));
             }
         } catch (SQLException e) {
@@ -150,23 +150,18 @@ public class JdbcDepartmentDao extends AbstractJdbcDao implements DepartmentDao 
     }
 
     @Override
-    public String isDepartAlreadyExisted(String nameS) {
-        String name = "";
+    public boolean isDepartAlreadyExisted(String departName) {
         try {
-            Statement statement = createConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(IS_EXIST);
-            while (resultSet.next()) {
-                Department department = new Department();
-                department.setName(resultSet.getString("NAME"));
-                if (department.getName().equalsIgnoreCase(nameS)) {
-                    name=department.getName();
-                    return name;
-                }
+            PreparedStatement preparedStatement = createConnection().prepareStatement(IS_EXIST);
+            preparedStatement.setString(1, departName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return false;
     }
 
 }
