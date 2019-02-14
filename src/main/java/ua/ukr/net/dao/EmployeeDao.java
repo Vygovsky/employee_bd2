@@ -26,4 +26,6 @@ public interface EmployeeDao {
 
     List<Employee> employeeByDepartmentId(Long departmentId);
 
+    boolean isExistEmployeeInDepartByEmail(String email);
+
 }

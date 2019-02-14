@@ -81,11 +81,12 @@ public class DepartServlet extends HttpServlet {
             department = new Department(name);
         } else {
             department = departmentDao.findID(Long.parseLong(departId));
+        }
 
-        }
-        if (!Validator.isExist(name, errorMessages)) {
-            System.out.println("error");
-        }
+        Validator.isExist(name, errorMessages);
+        Validator.validateDepartment(department, errorMessages);
+
+        department.setName(name);
 
         if (errorMessages.isEmpty()) {
             department = departmentDao.createOrUpdate(department);
@@ -94,7 +95,7 @@ public class DepartServlet extends HttpServlet {
         } else {
             session.setAttribute("errors", errorMessages);
             req.setAttribute("department", department);
-            resp.sendRedirect("/departments?action=add");
+            resp.sendRedirect("/departments?action=edit&id="+departId);
         }
     }
 }

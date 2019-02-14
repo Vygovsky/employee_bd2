@@ -20,6 +20,7 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
     private final String DELETE = "DELETE FROM employee WHERE id=?";
     private final String INSERT_EMPL = "INSERT INTO employee (first_name, email, birthday, department_id) VALUES(?,?,?,?)";
     private final String DELETE_EMPL_DEPART_ID = "DELETE FROM employee WHERE department_id = ?";
+    private final String IS_EXIST_EMPL_BY_EMAIL = "SELECT email employee WHERE employee.email=?";
 
 
     @Override
@@ -184,6 +185,21 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
             e.printStackTrace();
         }
         return listEmployee;
+    }
+
+    @Override
+    public boolean isExistEmployeeInDepartByEmail(String email) {
+        try {
+            PreparedStatement preparedStatement = createConnection().prepareStatement(IS_EXIST_EMPL_BY_EMAIL);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
 

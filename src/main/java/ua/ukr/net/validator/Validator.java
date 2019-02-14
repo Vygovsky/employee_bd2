@@ -17,7 +17,7 @@ public class Validator {
     private static JdbcDepartmentDao departmentDao = new JdbcDepartmentDao();
 
 
-    private static boolean isNameValidDepartment(String name) {
+    private static boolean isNameValidDepartmentAndEmployee(String name) {
         return name.length() < 3 || !name.matches("[\\D]+"); //тут NPE падает
     }
 
@@ -38,17 +38,25 @@ public class Validator {
     }
 
 
-    private static boolean isEmailValid(final String email) {
+    private static boolean isEmailValid(String email) {
         return EmailValidator.getInstance().isValid(email);
     }
 
-    public boolean isEmailAlreadyExisted(String email) {
+    private static boolean isExistEmailValid(String email, Map<String, String> errorMessages) {
+        if (employeeDao.isExistEmployeeInDepartByEmail(email)) {
+            errorMessages.put("errorEmailMessage", "Email incorrect or email address already exists.");
+            return false;
+        }
+        return true;
+    }
+
+ /*   public boolean isEmailAlreadyExisted(String email) {
         return employeeDao.findByEmail(email).getId() != 0;
     }
 
     public static boolean isEmailAlreadyExisted(Employee employee) {      // а вызывать будешь так: Validator.isEmailAlreadyExisted(employeeDao.findByEmail(email));
         return Objects.nonNull(employee) && employee.getName() != null;
-    }
+    }*/
 
     private static boolean isBirthdayValid(final Date birthday) {
         Date birthdayEmployee = new Date(Calendar.getInstance().getTime().getTime());
@@ -59,16 +67,16 @@ public class Validator {
     }
 
     public static void validateDepartment(Department department, Map<String, String> errorMessages) {
-        if (isNameValidDepartment(department.getName())) {
+        if (!isNameValidDepartmentAndEmployee(department.getName())) {
             errorMessages.put("departNameError", "Please enter correct name (should be longer then 3 characters and contains only alpha chars)");
         }
     }
 
-    public static void validatorEmployee(Employee employee, Map<String, String> errorMessages) {
-        if (!isEmailValid(employee.getEmail())) {
+    public static void validatorEmployee(Employee employee, String email, Map<String, String> errorMessages) {
+        if (!isEmailValid(employee.getEmail())||isExistEmailValid(email,errorMessages)) {
             errorMessages.put("errorEmailMessage", "Email incorrect or email address already exists.");
         }
-        if (isNameValidDepartment(employee.getName())) {
+        if (isNameValidDepartmentAndEmployee(employee.getName())) {
             errorMessages.put("errorNameMessage", "Name can't be number or less two litter.");
         }
         if (!isBirthdayValid(employee.getBirthday())) {
