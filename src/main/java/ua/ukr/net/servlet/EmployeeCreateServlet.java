@@ -99,11 +99,9 @@ public class EmployeeCreateServlet extends HttpServlet {
         session.removeAttribute("employee");
         String employeeId = req.getParameter("id");
 
-
         Map<String, String> errorMassages = new HashMap<>();
 
         Employee employee;
-
         if (StringUtils.isNullOrEmpty(employeeId)) {
             employee = new Employee();
         } else {
@@ -116,13 +114,20 @@ public class EmployeeCreateServlet extends HttpServlet {
         Long departId = Long.parseLong(req.getParameter("organizations"));
         employee.setDepartID(departId);
 
+
         Validator.validatorEmployee(employee, employee.getEmail(), errorMassages);
+        //Validator.isExistEmailValid(employee.getEmail(), errorMassages);
 
         if (errorMassages.isEmpty()) {
             employee = employeeDao.createOrUpdate(employee);
             req.setAttribute("departId", departId);
             req.setAttribute("employee", employee);
             resp.sendRedirect("/employee/create?action=list&departmentId=" + departId);
+        } else if (employeeId == null) {
+            session.setAttribute("errors", errorMassages);
+            req.setAttribute("employee", employee);
+            req.setAttribute("departId", departId);
+            resp.sendRedirect("/employee/create?action=add&currentDepartId=" + departId);
         } else {
             session.setAttribute("errors", errorMassages);
             req.setAttribute("employee", employee);
@@ -130,6 +135,7 @@ public class EmployeeCreateServlet extends HttpServlet {
             //  RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
             //rd.include(req, resp);
             resp.sendRedirect("/employee/create?action=edit&id=" + employeeId + "&currentDepartId=" + departId);
+
 
         }
     }

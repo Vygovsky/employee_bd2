@@ -20,7 +20,7 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
     private final String DELETE = "DELETE FROM employee WHERE id=?";
     private final String INSERT_EMPL = "INSERT INTO employee (first_name, email, birthday, department_id) VALUES(?,?,?,?)";
     private final String DELETE_EMPL_DEPART_ID = "DELETE FROM employee WHERE department_id = ?";
-    private final String IS_EXIST_EMPL_BY_EMAIL = "SELECT email employee WHERE employee.email=?";
+    private final String IS_EXIST_EMPL_BY_EMAIL = "SELECT email FROM employee WHERE employee.email=?";
 
 
     @Override

@@ -42,12 +42,8 @@ public class Validator {
         return EmailValidator.getInstance().isValid(email);
     }
 
-    private static boolean isExistEmailValid(String email, Map<String, String> errorMessages) {
-        if (employeeDao.isExistEmployeeInDepartByEmail(email)) {
-            errorMessages.put("errorEmailMessage", "Email incorrect or email address already exists.");
-            return false;
-        }
-        return true;
+    private static boolean isExistEmailValid(String email) {
+        return employeeDao.isExistEmployeeInDepartByEmail(email);
     }
 
  /*   public boolean isEmailAlreadyExisted(String email) {
@@ -73,7 +69,7 @@ public class Validator {
     }
 
     public static void validatorEmployee(Employee employee, String email, Map<String, String> errorMessages) {
-        if (!isEmailValid(employee.getEmail())||isExistEmailValid(email,errorMessages)) {
+        if (!isEmailValid(employee.getEmail()) || isExistEmailValid(email)) {
             errorMessages.put("errorEmailMessage", "Email incorrect or email address already exists.");
         }
         if (isNameValidDepartmentAndEmployee(employee.getName())) {
