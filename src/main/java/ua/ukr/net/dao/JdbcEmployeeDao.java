@@ -22,7 +22,6 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
     private final String DELETE_EMPL_DEPART_ID = "DELETE FROM employee WHERE department_id = ?";
     private final String IS_EXIST_EMPL_BY_EMAIL = "SELECT email FROM employee WHERE employee.email=?";
 
-
     @Override
     public Employee createOrUpdate(Employee employee) {
         Long id;
@@ -163,7 +162,7 @@ public class JdbcEmployeeDao extends AbstractJdbcDao implements EmployeeDao {
     }
 
     @Override
-    public List<Employee> employeeByDepartmentId(Long departmentId) {
+    public List<Employee> getEmployeeByDepartmentId(Long departmentId) {
         List<Employee> listEmployee = new ArrayList<>();
         Department department = new Department();
         try {

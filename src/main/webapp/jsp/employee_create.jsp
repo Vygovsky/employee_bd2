@@ -20,7 +20,7 @@
 <div align="center">
     <h1>Создать сотрудника</h1>
 </div>
-<form method="POST" action="${pageContext.request.contextPath}/employee/create">
+<form method="POST" action="${pageContext.request.contextPath}/employee">
     <div class="form-style-6">
         <table>
             <tr>
@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <td> Электронная почта :</td>
-                <td><input type="text" name="email" required value="${sessionScope.employee.email}">${employee.email}</td>
+                <td><input type="text" name="email" required value="${employee.email}">${employee.email}</td>
                 <c:if test="${not empty errors}">
                     <span style="color:red"><c:out value="${sessionScope.errors[\"errorEmailMessage\"]}"/></span>
                 </c:if>

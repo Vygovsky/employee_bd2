@@ -22,7 +22,7 @@ import java.util.Map;
 
 import static java.time.LocalDate.parse;
 
-@WebServlet("/employee/create")
+@WebServlet("/employee")
 public class EmployeeCreateServlet extends HttpServlet {
 
     private JdbcEmployeeDao employeeDao = new JdbcEmployeeDao();
@@ -39,11 +39,10 @@ public class EmployeeCreateServlet extends HttpServlet {
                 listOfEmployeesInDepartment(req, resp);
                 break;
             case "add":
-                Long currentDepartId = Long.parseLong(req.getParameter("currentDepartId"));
-                addEmployee(req, resp, currentDepartId);
+                renderAddEmployeePage(req, resp);
                 break;
             case "edit":
-                updateEmployeeForm(req, resp);
+                renderUpdateEmployeeForm(req, resp);
                 break;
             case "delete":
                 deleteEmployee(req, resp);
@@ -51,7 +50,8 @@ public class EmployeeCreateServlet extends HttpServlet {
         }
     }
 
-    private void addEmployee(HttpServletRequest req, HttpServletResponse resp, Long currentDepartId) throws ServletException, IOException {
+    private void renderAddEmployeePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long currentDepartId = Long.parseLong(req.getParameter("currentDepartId"));
         pushListOfDepartmentsWithCurrentDepartmentIdAsRequestParameters(req, currentDepartId);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/employee_create.jsp");
         dispatcher.forward(req, resp);
@@ -69,7 +69,7 @@ public class EmployeeCreateServlet extends HttpServlet {
         listOfEmployeesInDepartment(req, resp);
     }
 
-    private void updateEmployeeForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void renderUpdateEmployeeForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long employeeId = Long.parseLong(req.getParameter("id"));
         Long currentDepartId = Long.parseLong(req.getParameter("currentDepartId"));
         Employee employee = employeeDao.findById(employeeId);
@@ -83,20 +83,22 @@ public class EmployeeCreateServlet extends HttpServlet {
 
     private void listOfEmployeesInDepartment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long departmentId = Long.parseLong(req.getParameter("departmentId"));
-        List<Employee> employeeList = employeeDao.employeeByDepartmentId(departmentId);
+        List<Employee> employeeList = employeeDao.getEmployeeByDepartmentId(departmentId);
         req.setAttribute("employeeList", employeeList);
         req.setAttribute("departmentId", departmentId);
         req.getServletContext().getRequestDispatcher("/jsp/employee_list.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=utf-8");
 
         HttpSession session = req.getSession();
+        //Todo check and remove
         session.removeAttribute("errors");
         session.removeAttribute("employee");
+
         String employeeId = req.getParameter("id");
 
         Map<String, String> errorMassages = new HashMap<>();
@@ -115,28 +117,26 @@ public class EmployeeCreateServlet extends HttpServlet {
         employee.setDepartID(departId);
 
 
-        Validator.validatorEmployee(employee, employee.getEmail(), errorMassages);
+        Validator.validateEmployee(employee, employee.getEmail(), errorMassages);
         //Validator.isExistEmailValid(employee.getEmail(), errorMassages);
 
         if (errorMassages.isEmpty()) {
             employee = employeeDao.createOrUpdate(employee);
             req.setAttribute("departId", departId);
             req.setAttribute("employee", employee);
-            resp.sendRedirect("/employee/create?action=list&departmentId=" + departId);
+            resp.sendRedirect("/employee/action=list&departmentId=" + departId);
         } else if (employeeId == null) {
             session.setAttribute("errors", errorMassages);
             req.setAttribute("employee", employee);
             req.setAttribute("departId", departId);
-            resp.sendRedirect("/employee/create?action=add&currentDepartId=" + departId);
+            resp.sendRedirect("/employee/action=add&currentDepartId=" + departId);
         } else {
             session.setAttribute("errors", errorMassages);
             req.setAttribute("employee", employee);
             req.setAttribute("departId", departId);
             //  RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/employee_create.jsp");
             //rd.include(req, resp);
-            resp.sendRedirect("/employee/create?action=edit&id=" + employeeId + "&currentDepartId=" + departId);
-
-
+            resp.sendRedirect("/employee/action=edit&id=" + employeeId + "&currentDepartId=" + departId);
         }
     }
 }

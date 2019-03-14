@@ -22,9 +22,7 @@ public interface EmployeeDao {
 
     void deleteAllEmplForDepart(Long departID);
 
-    /*void updateDepartForEmployee(Long emplId, Long departId);*/
-
-    List<Employee> employeeByDepartmentId(Long departmentId);
+    List<Employee> getEmployeeByDepartmentId(Long departmentId);
 
     boolean isExistEmployeeInDepartByEmail(String email);
 

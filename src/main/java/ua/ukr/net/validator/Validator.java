@@ -68,7 +68,7 @@ public class Validator {
         }
     }
 
-    public static void validatorEmployee(Employee employee, String email, Map<String, String> errorMessages) {
+    public static void validateEmployee(Employee employee, String email, Map<String, String> errorMessages) {
         if (!isEmailValid(employee.getEmail()) || isExistEmailValid(email)) {
             errorMessages.put("errorEmailMessage", "Email incorrect or email address already exists.");
         }
